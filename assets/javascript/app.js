@@ -86,10 +86,10 @@ function renderChatRoomHeader() {
     // when ever the user DB value is being update, the following function will be trigger
     usersRef.on("value", function(childsnapshot) {
       console.log("User List :" + userKey);
+      $(".list").empty();
       childsnapshot.forEach(function(child) {
-       
           if (child.key !== userKey){
-              $(".list").empty();
+              
               var photo = child.val().photo;
               var name = child.val().name;
               var status = child.val().status; 
