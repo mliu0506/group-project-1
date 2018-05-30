@@ -9,29 +9,25 @@
     <!--  Bootstrap 4 CSS -->
     
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-      
+   
     <!--Awesome Font  -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
     <!--Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
 
-    
-    <!-- Siderbar CSS -->
-    <link rel="stylesheet" href="assets/css/sidebar.css">
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="assets/css/elasticslider.css">
     
     <!-- Style CSS -->
     <link rel="stylesheet" href="assets/css/coverflow.css">
 
-
-
-
-
+    <!-- Siderbar CSS -->
+    <link rel="stylesheet" href="assets/css/sidebar.css">
 
 </head>
 <body>
-<header> Face Battles </header>
-<!-- Navigation -->
+  <!-- Navigation -->
 <a id="menu-toggle" href="#" class="btn btn-light btn-sm toggle"><i class="fa fa-bars" data-toggle="tooltip" title="MENU"></i></a>
 <nav id="sidebar-wrapper">
   <ul class="sidebar-nav">
@@ -58,31 +54,28 @@
   </ul>
 </nav>
 
-<!-- Main Page Panel with Button -->
+<!-- Profile Page Panel with Button -->
 <section class="panel">
   <div class="inner row col-12 justify-content-center align-items-center">
     <div class="borderBack">
-    <h3>Face Battles</h3>
-    <p>social community / network
-      <br/>
-      <a href="#" onClick="location.href='chatroom.html';" class="button"><span>Find Out More</span></a>
-      </p>
+    <h3>Mike Thomas</h3>
+     <p>Number of Game : 10 <br>
+     Win : 6 <br>
+     Lose : 4</p> 
     </div>
   </div>
 </section>
 
-<!-- Main Page Photo-->
-<section class="row">
-  <div class="col-12">
-    <div class="coverflow">
-      <a href=""><img src="assets/images/happy1.jpg" class="coverflow__image" /></a>
-      <a href=""><img src="assets/images/angry2.jpg" class="coverflow__image" /></a>
-      <a href=""><img src="assets/images/surprise1.jpg" class="coverflow__image" /></a>
-      <a href=""><img src="assets/images/happy3.jpg" class="coverflow__image" /></a>
-      <a href=""><img src="assets/images/surprise5.jpg" class="coverflow__image" /></a>
-    </div>
+
+<!-- Photo Slider-->
+<div class="slider">
+    <div class="slide" ><img src="assets/images/happy1.jpg" /><p>Tracy Carpenter: Win : Happy :)</p></div>
+    <div class="slide"><img src="assets/images/angry2.jpg" /><p>Vincent Porter: Lose :     Angry :{</p></div>
+    <div class="slide"><img src="assets/images/surprise1.jpg" /><p>Ginger Johnston: Win :Surprise ;></p></div>
+    <div class="slide" ><img src="assets/images/happy3.jpg" /><p>Monica Ward: Lose :  Happy :)</p></div>
+    <div class="slide" ><img src="assets/images/surprise5.jpg" /><p>Christian Kelly: Win :Surprise ;></p></div>
+    <div class="slide"><img src="assets/images/angry1.jpg" /><p>Mike Thomas: Lose: Angry :{</p></div>
   </div>
-</section>
 
 
 
@@ -91,8 +84,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    
 
 <!-- Firebase Reference -->
 
@@ -107,12 +98,11 @@
  <script src="https://code.jquery.com/jquery.js"></script>
 
 
-<!-- This program java script-->
-<script src="assets/javascript/coverflow.js"></script>
+ <!-- This program java script-->
+<script src="assets/javascript/elasticslider.js"></script>
 
 <!-- This program java script-->
 <script src="assets/javascript/sidebar.js"></script>
-
 
 </body>
 </html>

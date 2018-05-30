@@ -1,0 +1,312 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!--Google Login meta-->
+    <meta name="google-signin-client_id" content="369092792103-ekret3hb9qh5jtrdp1s0a15ql067378n.apps.googleusercontent.com">
+
+   
+    <title>Face Battles</title>
+
+    <!--  Bootstrap 4 CSS -->
+    
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      
+    <!--Awesome Font  -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+    <!--Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+
+  
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="assets/css/chatroom.css">
+
+    <!-- Siderbar CSS -->
+    <link rel="stylesheet" href="assets/css/sidebar.css">
+
+
+
+</head>
+<body>
+<!-- Navigation -->
+<a id="menu-toggle" href="#" class="btn btn-light btn-sm toggle"><i class="fa fa-bars" data-toggle="tooltip" title="MENU"></i></a>
+<nav id="sidebar-wrapper">
+  <ul class="sidebar-nav">
+    <a id="menu-close" href="#" class="btn btn-light btn-sm float-right toggle" hidden><i class="fa fa-times"></i></a>
+    <li class="sidebar-brand">
+    <a href="index.html" onclick="$('#menu-close').click();">Face Battles</a>
+      
+    </li>
+    <li>
+    <a href="chatroom.html" onclick="$('#menu-close').click();">User Login</a>
+    </li>
+    <li>
+      <a href="gamehistory.html" onclick="$('#menu-close').click();">User Profile</a>
+    </li>
+    <li>
+      <a href="chatroom.html" onclick="$('#menu-close').click();">Lobby / Chat Room</a>
+    </li>
+    <li>
+      <a href="gameroom.html" onclick="$('#menu-close').click();">Game Room</a>
+    </li>
+    <li>
+      <a id="signout" href="#" onclick="$('#menu-close').click();">User Logout</a>
+    </li>
+  </ul>
+</nav>
+
+<!--Google Sign-in button -->
+<div class="g-signin2 justify-content-center" data-onsuccess="onSignIn"></div>
+
+
+<!-- Chat Room -->
+<div class="container">
+  <div class="people-list" id="people-list">
+    <div class="search">
+      <input type="text" placeholder="search" />
+      <i class="fa fa-search"></i>
+    </div>
+    <ul class="list">
+
+      
+      <div class="clearfix">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_02.jpg" alt="avatar" />
+        <div class="about">
+          <div class="name">Aiden Chavez</div>
+          <div class="status">
+            <i class="fa fa-circle offline"></i> left 7 mins ago
+          </div>
+        </div>
+      </div>
+      
+      <div class="clearfix">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_03.jpg" alt="avatar" />
+        <div class="about">
+          <div class="name">Mike Thomas</div>
+          <div class="status">
+            <i class="fa fa-circle online"></i> online
+          </div>
+        </div>
+      </div>
+      
+      <div class="clearfix">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_04.jpg" alt="avatar" />
+        <div class="about">
+          <div class="name">Erica Hughes</div>
+          <div class="status">
+            <i class="fa fa-circle online"></i> online
+          </div>
+        </div>
+      </div>
+      
+      <div class="clearfix">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_05.jpg" alt="avatar" />
+        <div class="about">
+          <div class="name">Ginger Johnston</div>
+          <div class="status">
+            <i class="fa fa-circle online"></i> online
+          </div>
+        </div>
+      </div>
+      
+      <div class="clearfix">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_06.jpg" alt="avatar" />
+        <div class="about">
+          <div class="name">Tracy Carpenter</div>
+          <div class="status">
+            <i class="fa fa-circle offline"></i> left 30 mins ago
+          </div>
+        </div>
+      </div>
+      
+      <div class="clearfix">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_07.jpg" alt="avatar" />
+        <div class="about">
+          <div class="name">Christian Kelly</div>
+          <div class="status">
+            <i class="fa fa-circle offline"></i> left 10 hours ago
+          </div>
+        </div>
+      </div>
+      
+      <div class="clearfix">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_08.jpg" alt="avatar" />
+        <div class="about">
+          <div class="name">Monica Ward</div>
+          <div class="status">
+            <i class="fa fa-circle online"></i> online
+          </div>
+        </div>
+      </div>
+      
+      <div class="clearfix">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_09.jpg" alt="avatar" />
+        <div class="about">
+          <div class="name">Dean Henry</div>
+          <div class="status">
+            <i class="fa fa-circle offline"></i> offline since Oct 28
+          </div>
+        </div>
+      </div>
+      
+      <div class="clearfix">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_10.jpg" alt="avatar" />
+        <div class="about">
+          <div class="name">Peyton Mckinney</div>
+          <div class="status">
+            <i class="fa fa-circle online"></i> online
+          </div>
+        </div>
+      </div>
+    </ul>
+  </div>
+  
+  <div class="chat">
+    <div class="chat-header clearfix">
+      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" alt="avatar" />
+      
+      <div class="chat-about">
+        <div class="chat-with">Chat Room - Olia</div>
+        <div class="chat-num-messages">already 1 902 messages</div>
+        <button>
+            Create Game
+        </button>
+      </div>
+      <i class="fa fa-star"></i>
+    </div> <!-- end chat-header -->
+    
+    <div class="chat-history">
+      <ul>
+        <div class="clearfix">
+          <div class="message-data align-right">
+            <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
+            <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
+
+            
+          </div>
+          <div class="message other-message float-right">
+            Hi Vincent, how are you? How is the project coming along?
+          </div>
+        </div>
+        
+        <div>
+          <div class="message-data">
+            <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+            <span class="message-data-time">10:12 AM, Today</span>
+          </div>
+          <div class="message my-message">
+            Are we meeting today? Project has been already finished and I have results to show you.
+          </div>
+        </div>
+        
+        <div class="clearfix">
+          <div class="message-data align-right">
+            <span class="message-data-time" >10:14 AM, Today</span> &nbsp; &nbsp;
+            <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
+            
+          </div>
+          <div class="message other-message float-right">
+            Well I am not sure. The rest of the team is not here yet. Maybe in an hour or so? Have you faced any problems at the last phase of the project?
+          </div>
+        </div>
+        
+        <div>
+          <div class="message-data">
+            <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+            <span class="message-data-time">10:20 AM, Today</span>
+          </div>
+          <div class="message my-message">
+            Actually everything was fine. I'm very excited to show this to our team.
+          </div>
+        </div>
+        
+        <div>
+          <div class="message-data">
+            <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+            <span class="message-data-time">10:31 AM, Today</span>
+          </div>
+          <i class="fa fa-circle online"></i>
+          <i class="fa fa-circle online" style="color: #AED2A6"></i>
+          <i class="fa fa-circle online" style="color:#DAE9DA"></i>
+        </div>
+        
+      </ul>
+      
+    </div> <!-- end chat-history -->
+    
+    <div class="chat-message clearfix">
+      <textarea name="message-to-send" id="message-to-send" placeholder ="Type your message" rows="3"></textarea>
+              
+      <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
+      <i class="fa fa-file-image-o"></i>
+      
+      <button>Send</button>
+
+    </div> <!-- end chat-message -->
+    
+  </div> <!-- end chat -->
+  
+</div> <!-- end container -->
+
+<!-- Game Room-->
+
+
+
+
+
+<script id="message-template" type="text/x-handlebars-template">
+<li class="clearfix">
+  <div class="message-data align-right">
+    <span class="message-data-time" >{{time}}, Today</span> &nbsp; &nbsp;
+    <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
+  </div>
+  <div class="message other-message float-right">
+    {{messageOutput}}
+  </div>
+</li>
+</script>
+
+<script id="message-response-template" type="text/x-handlebars-template">
+<li>
+  <div class="message-data">
+    <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+    <span class="message-data-time">{{time}}, Today</span>
+  </div>
+  <div class="message my-message">
+    {{response}}
+  </div>
+</li>
+</script>
+
+<!--  Bootstrap 4 JavaScript -->
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<!-- Firebase Reference -->
+
+<script src="https://www.gstatic.com/firebasejs/5.0.2/firebase.js"></script>
+
+<!-- AJAX Google jQuery CDN  -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+ <!-- jQuery -->
+ <script src="https://code.jquery.com/jquery.js"></script>
+
+<!-- Google Login-->
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+
+<!-- This program java script-->
+<script src="assets/javascript/app.js"></script>
+
+<!-- This program java script-->
+<script src="assets/javascript/sidebar.js"></script>
+
+</body>
+</html>

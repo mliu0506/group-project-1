@@ -16,13 +16,12 @@
     <!--Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
 
-    
+  
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="assets/css/chatroom.css">
+
     <!-- Siderbar CSS -->
     <link rel="stylesheet" href="assets/css/sidebar.css">
-    
-    <!-- Style CSS -->
-    <link rel="stylesheet" href="assets/css/coverflow.css">
-
 
 
 
@@ -30,8 +29,7 @@
 
 </head>
 <body>
-<header> Face Battles </header>
-<!-- Navigation -->
+  <!-- Navigation -->
 <a id="menu-toggle" href="#" class="btn btn-light btn-sm toggle"><i class="fa fa-bars" data-toggle="tooltip" title="MENU"></i></a>
 <nav id="sidebar-wrapper">
   <ul class="sidebar-nav">
@@ -58,41 +56,90 @@
   </ul>
 </nav>
 
-<!-- Main Page Panel with Button -->
-<section class="panel">
-  <div class="inner row col-12 justify-content-center align-items-center">
-    <div class="borderBack">
-    <h3>Face Battles</h3>
-    <p>social community / network
-      <br/>
-      <a href="#" onClick="location.href='chatroom.html';" class="button"><span>Find Out More</span></a>
-      </p>
-    </div>
+<!-- Game Room-->
+
+
+<div class="gameroom">
+     
+      <div class="chat">
+        <div class="chat-header clearfix">
+          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_10.jpg" alt="avatar" />
+          
+          <div class="chat-about">
+            <div class="chat-with">Game Room - Peyton Mckinney</div>
+            <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
+            <button>
+                Join Game
+               </button>
+          </div>
+          <i class="fa fa-star"></i>
+        </div>
+        <div class="chat">
+          <div class="chat-header clearfix">
+              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_09.jpg" alt="avatar" />
+              
+              <div class="chat-about">
+                <div class="chat-with">Game Room - Dean Henry</div>
+                <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
+                <button>
+                    Join Game
+                   </button>
+              </div>
+              <i class="fa fa-star"></i>
+
+        </div> 
+        <div class="chat">
+            <div class="chat-header clearfix">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_08.jpg" alt="avatar" />
+                
+                <div class="chat-about">
+                  <div class="chat-with">Game Room - Monica Ward</div>
+                  <span class="message-data-time" >10:10 AM, Today</span> &nbsp; &nbsp;
+                  <button>
+                      Join Game
+                     </button>
+                </div>
+                <i class="fa fa-star"></i>
+  
+          </div> <!-- end chat-header -->
+    
+
+    
+  </div> <!-- end chat -->
+  
+</div> <!-- end container -->
+
+
+
+<script id="message-template" type="text/x-handlebars-template">
+<li class="clearfix">
+  <div class="message-data align-right">
+    <span class="message-data-time" >{{time}}, Today</span> &nbsp; &nbsp;
+    <span class="message-data-name" >Olia</span> <i class="fa fa-circle me"></i>
   </div>
-</section>
-
-<!-- Main Page Photo-->
-<section class="row">
-  <div class="col-12">
-    <div class="coverflow">
-      <a href=""><img src="assets/images/happy1.jpg" class="coverflow__image" /></a>
-      <a href=""><img src="assets/images/angry2.jpg" class="coverflow__image" /></a>
-      <a href=""><img src="assets/images/surprise1.jpg" class="coverflow__image" /></a>
-      <a href=""><img src="assets/images/happy3.jpg" class="coverflow__image" /></a>
-      <a href=""><img src="assets/images/surprise5.jpg" class="coverflow__image" /></a>
-    </div>
+  <div class="message other-message float-right">
+    {{messageOutput}}
   </div>
-</section>
+</li>
+</script>
 
-
+<script id="message-response-template" type="text/x-handlebars-template">
+<li>
+  <div class="message-data">
+    <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
+    <span class="message-data-time">{{time}}, Today</span>
+  </div>
+  <div class="message my-message">
+    {{response}}
+  </div>
+</li>
+</script>
 
 <!--  Bootstrap 4 JavaScript -->
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-    
 
 <!-- Firebase Reference -->
 
@@ -103,15 +150,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
  <!-- jQuery -->
-
  <script src="https://code.jquery.com/jquery.js"></script>
 
 
 <!-- This program java script-->
-<script src="assets/javascript/coverflow.js"></script>
+<script src="assets/javascript/app.js"></script>
 
 <!-- This program java script-->
 <script src="assets/javascript/sidebar.js"></script>
+
 
 
 </body>
