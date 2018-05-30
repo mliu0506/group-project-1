@@ -37,6 +37,7 @@ function onSignIn(googleUser) {
   googleLogin = true;
   userKey = ID;
   usersRef.child(userKey).update({uID:ID,name,name,photo:photo,email:email,status:"online",lastdisconnect:""});
+  console.log("Sign-in User key :" + userKey);
 }
 //Google Sign out function
 function signOut() {
@@ -59,9 +60,9 @@ $("#signout").on("click", function() {
 });
 
 function renderChatRoom() {
-
   // when ever the user DB value is being update, the following function will be trigger
   uersRef.ref().on("value", function(childsnapshot) {
+    console.log("Chat Room User key :" + userKey);
     if (childsnapshot.child(userKey).exists()){
       var photo = usersRef.child(userKey).photo;
       var name = usersRef.child(userKey).name;
