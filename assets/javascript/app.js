@@ -57,10 +57,16 @@ $("#signout").on("click", function() {
   if (googleLogin === true) { 
     signOut(); // Google logout
   }
-  location.reload(); // when page re-load it will trigger Firebase Disconnect
+  location.reload(); // refresh
 });
 
-
+//Log in function
+$("#signin").on("click", function() {
+  if (googleLogin === true) { 
+    onSignIn(googleUser); // Google login
+  }
+  location.reload(); // refresh
+});
 
 function renderChatRoom() {
   // when ever the user DB value is being update, the following function will be trigger
