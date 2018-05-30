@@ -63,16 +63,16 @@ $("#signout").on("click", function() {
 
 function renderChatRoom() {
   // when ever the user DB value is being update, the following function will be trigger
-  usersRef.once("value", function(childsnapshot) {
+  usersRef.on("value", function(childsnapshot) {
     console.log("Chat Room User key :" + userKey);
-    if (childsnapshot.hasChild(userKey)){
+   // if (childsnapshot.hasChild(userKey)){
       var photo = childsnapshot.val().photo;
       var name = childsnapshot.val().name;
       console.log("Name:" + childsnapshot.val().photo);
       console.log("Name:" + childsnapshot.val().name);
       $(".user-photo").html("<img src="+ photo +" alt='avatar' />");
       $(".chat-with").text(name);
-    }
+   // }
     });
 
   }
