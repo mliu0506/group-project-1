@@ -84,7 +84,7 @@ function renderChatRoomHeader() {
 
   function renderUserList() {
     // when ever the user DB value is being update, the following function will be trigger
-    usersRef.on("child_added", function(childsnapshot) {
+    usersRef.on("value", function(childsnapshot) {
       console.log("User List :" + userKey);
       childsnapshot.forEach(function(child) {
      
