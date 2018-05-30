@@ -12,7 +12,7 @@ var database = firebase.database();
 var chatRef = database.ref('chats');
 var usersRef = database.ref('users/');
 var gamesRef = database.ref('games/');
-var staticsRef = database.ref('statics/');
+var staticsRef = database.ref('history/');
 
 var gameID = "";
 var userKey = "";
@@ -78,12 +78,13 @@ function renderChatRoomHeader() {
    }
     });
 
+  
   }
 
 
   function renderUserList() {
     // when ever the user DB value is being update, the following function will be trigger
-    usersRef.once("value", function(childsnapshot) {
+    usersRef.on("child_added", function(childsnapshot) {
       console.log("User List :" + userKey);
       childsnapshot.forEach(function(child) {
      
@@ -124,11 +125,11 @@ function renderChatRoomHeader() {
       var d = new Date();
       var n = d.toUTCString();
       if (userID == userKey) {
-        $('.message-box').prepend('<div><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i>'+name+'</span><span class="message-data-time" >'+timestamp+'</span></div><div class="message my-message">'+message+'</div></div>');
+        $('.message-box').prepend('<div><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i>'+username+'</span><span class="message-data-time" >'+timestamp+'</span></div><div class="message my-message">'+message+'</div></div>');
       
       } else {
         
-        $('.message-box').prepend('<div class="clearfix"><div class="message-data align-right"><span class="message-data-time" >'+timestamp+'</span> &nbsp; &nbsp;<span class="message-data-name" >'+name+'</span> <i class="fa fa-circle me"></i></div><div class="message other-message float-right">'+message+'</div></div>');
+        $('.message-box').prepend('<div class="clearfix"><div class="message-data align-right"><span class="message-data-time" >'+timestamp+'</span> &nbsp; &nbsp;<span class="message-data-name" >'+username+'</span> <i class="fa fa-circle me"></i></div><div class="message other-message float-right">'+message+'</div></div>');
       }
     });
   
