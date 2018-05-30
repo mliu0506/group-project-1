@@ -69,7 +69,7 @@ function renderChatRoom() {
    if (childsnapshot.key === userKey){
       var photo = childsnapshot.val().photo;
       var name = childsnapshot.val().name;
-      console.log("Name:" + childsnapshot.val().photo);
+      console.log("Photo:" + childsnapshot.val().photo);
       console.log("Name:" + childsnapshot.val().name);
       $(".user-photo").html("<img class='rounded' src="+ photo +" alt='avatar' />");
       $(".chat-with").text(name);
