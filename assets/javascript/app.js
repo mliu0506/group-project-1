@@ -87,7 +87,7 @@ function renderChatRoomHeader() {
       console.log("User List :" + userKey);
       childsnapshot.forEach(function(child) {
      
-          if (child.key === userKey){
+          if (child.key !== userKey){
               var photo = child.val().photo;
               var name = child.val().name;
               var status = child.val().status; 
@@ -103,7 +103,36 @@ function renderChatRoomHeader() {
   }
   
 
+  function renderchatRoomMessage() {
+    $('#chat-submit').on("click",function(){
+      var comment = $('#message-to-send').val().trim();
+      var d = new Date();
+      var timestamp = d.toUTCString();
+      console.log(comment)
+      if(comment !== ""){
+        chatRef.push({uID:userKey,name:name,photo:photo,message:comment,timestamp:timestamp});
+        $('#message-to-send').val(""); // empty the input text field
+      }
+    });
 
+    chatRef.on("child_added",function(childSnapshot){
+      var message = childSnapshot.val().message;
+      var username = childSnapshot.val().name;
+      var userID = childSnapshot.val().uID;
+      var photo = childSnapshot.val().photo;
+      var timestamp = childSnapshot.val().timestamp;
+      var d = new Date();
+      var n = d.toUTCString();
+      if (userID == userKey) {
+        $('.message-box').append('<div><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i>'+name+'</span><span class="message-data-time" >'+timestamp+'</span></div><div class="message my-message">'+message+'</div></div>');
+      
+      } else {
+        
+        $('.message-box').append('<div class="clearfix"><div class="message-data align-right"><span class="message-data-time" >'+timestamp+'</span> &nbsp; &nbsp;<span class="message-data-name" >'+name+'</span> <i class="fa fa-circle me"></i></div><div class="message other-message float-right">'+message+'</div></div>');
+      }
+    });
+  
+  }
 
 
 //Chat Room Function
@@ -203,5 +232,6 @@ function renderChatRoomHeader() {
 
 $(document).ready(function(){
   renderChatRoomHeader();
-  renderUserList()
+  renderUserList();
+  renderchatRoomMessage();
 })
