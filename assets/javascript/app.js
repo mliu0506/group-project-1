@@ -49,6 +49,14 @@ function signOut() {
   });
 }
 
+//Log out function
+$("#signout").on("click", function() {
+  if (googleLogin === true) { 
+    signOut(); // Google logout
+  }
+  location.reload(); // when page re-load it will trigger Firebase Disconnect
+});
+
 //Chat Room Function
 (function(){
   
