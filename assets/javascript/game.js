@@ -4,6 +4,7 @@
     1) Plan out flow of data
     2) Either return values or depend on global variables
     3) Clean up functions
+    4) GamePage.html and GamePage Chat
 */
 
 function activateCamera(id){
@@ -17,18 +18,19 @@ function take_snapshot(){
     image data will be passed as data_uri*/
     Webcam.snap(function(data_uri){
         //TODO send and update to Firebase
+        detectFace(data_uri);
     });
     //Turns off Camera
     //Webcam.reset();
 }
 
-function detectFace(){
+function detectFace(data_uri){
     /*Function to perform ajax call to Face++ API to detect faces from image
     and returns detected emotions*/
 
     var queryURL = "https://api-us.faceplusplus.com/facepp/v3/detect";
-    var data64 = "" //TODO place either firebase snapshot here or pass in local variable
-    //REMEMBER: string.replace("data:image/jpeg;base64,","");
+    //Removes 'data:image/jpeg;base64,' from the uri data to match Face++ parameter image_base64
+    var data64 = data_uri.replace("data:image/jpeg;base64,","");
     //Create AJAX call
     $.ajax({
         url: queryURL,
