@@ -59,6 +59,8 @@ $("#signout").on("click", function() {
   location.reload(); // when page re-load it will trigger Firebase Disconnect
 });
 
+
+
 function renderChatRoom() {
   // when ever the user DB value is being update, the following function will be trigger
   uersRef.ref().on("value", function(childsnapshot) {
@@ -152,7 +154,7 @@ function renderChatRoom() {
   var searchFilter = {
     options: { valueNames: ['name'] },
     init: function() {
-      var userList = new List('people-list', this.options);
+      var userList = ['people-list', this.options];
       var noItems = $('<li id="no-items-found">No items found</li>');
       
       userList.on('updated', function(list) {
