@@ -66,8 +66,9 @@ function renderChatRoom() {
   usersRef.on("value", function(childsnapshot) {
     console.log("Chat Room User key :" + userKey);
     if (childsnapshot.child(userKey).exists()){
-      var photo = usersRef.child(userKey).photo;
-      var name = usersRef.child(userKey).name;
+      var photo = childsnapshot.val().child(userKey).photo;
+      var name = childsnapshot.val().child(userKey).name;
+      console.log("Name:" + name);
       $(".user-photo").html("<img src="+ photo +" alt='avatar' />");
       $(".chat-with").text(name);
     }
