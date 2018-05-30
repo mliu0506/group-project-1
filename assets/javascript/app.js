@@ -63,7 +63,7 @@ $("#signout").on("click", function() {
 
 function renderChatRoom() {
   // when ever the user DB value is being update, the following function will be trigger
-  usersRef.on("value", function(childsnapshot) {
+  usersRef.once("value", function(childsnapshot) {
     console.log("Chat Room User key :" + userKey);
     if (childsnapshot.hasChild(userKey)){
       var photo = childsnapshot.val().photo;
