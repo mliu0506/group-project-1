@@ -45,6 +45,7 @@ function signOut() {
   var lastdisconnect = d.toUTCString();
   auth2.signOut().then(function () {
     usersRef.child(userKey).update({status:"offline",lastdisconnect:lastdisconnect});
+    googleLogin = false;
     console.log('User signed out.');
   });
 }
@@ -56,6 +57,20 @@ $("#signout").on("click", function() {
   }
   location.reload(); // when page re-load it will trigger Firebase Disconnect
 });
+
+function renderChatRoom() {
+
+  // when ever the user DB value is being update, the following function will be trigger
+  uersRef.ref().on("value", function(childsnapshot) {
+    if (childsnapshot.child(userKey).exists()){
+      var photo = usersRef.child(userKey).photo;
+      var name = usersRef.child(userKey).name;
+      $(".user-photo").html("<img src="+ photo +" alt='avatar' />");
+      $(".chat-with").text(name);
+    }
+    });
+
+  }
 
 //Chat Room Function
 (function(){
