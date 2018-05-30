@@ -64,7 +64,7 @@ $("#signin").on("click", function() {
   location.reload(); // refresh
 });
 
-function renderChatRoom() {
+function renderChatRoomHeader() {
   // when ever the user DB value is being update, the following function will be trigger
   usersRef.on("child_added", function(childsnapshot) {
     console.log("Chat Room User key :" + userKey);
@@ -79,6 +79,31 @@ function renderChatRoom() {
     });
 
   }
+
+
+  function renderUserList() {
+    // when ever the user DB value is being update, the following function will be trigger
+    usersRef.once("value", function(childsnapshot) {
+      console.log("User List :" + userKey);
+      childsnapshot.forEach(function(child) {
+     
+          if (child.key === userKey){
+              var photo = childsnapshot.val().photo;
+              var name = childsnapshot.val().name;
+              var status = childsnapshot.val().status; 
+              var lastdisconnect = childsnapshot.val().lastdisconnect;
+              console.log("Name:" + childsnapshot.val().name);
+              console.log("Status:" + childsnapshot.val().status); 
+              $(".list").append(" <div class='clearfix'><img class='rounded-circle' src="+ photo +" alt='avatar' /><div class='about'><div class='name'>" + name + "</div><div class='status'><i class='fa fa-circle offline'></i>" + lastdisconnect+"</div></div></div>");
+
+  
+          }
+      });
+    });
+  }
+  
+
+
 
 
 //Chat Room Function
@@ -177,5 +202,5 @@ function renderChatRoom() {
 })();
 
 $(document).ready(function(){
-  renderChatRoom();
+  renderChatRoomHeader();
 })
