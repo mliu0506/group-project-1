@@ -36,7 +36,7 @@ function onSignIn(googleUser) {
   var photo = profile.getImageUrl();
   googleLogin = true;
   userKey = ID;
-  usersRef.child(userKey).update({uID:ID,name,name,photo:photo,email:email,status:"online"});
+  usersRef.child(userKey).update({uID:ID,name,name,photo:photo,email:email,status:"online",lastdisconnect:""});
 }
 //Google Sign out function
 function signOut() {
