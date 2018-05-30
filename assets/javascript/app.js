@@ -203,4 +203,5 @@ function renderChatRoomHeader() {
 
 $(document).ready(function(){
   renderChatRoomHeader();
+  renderUserList()
 })
