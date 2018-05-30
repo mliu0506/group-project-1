@@ -72,6 +72,7 @@ function renderChatRoom() {
 
   }
 
+
 //Chat Room Function
 (function(){
   
@@ -166,3 +167,7 @@ function renderChatRoom() {
   searchFilter.init();
   
 })();
+
+$(document).ready(function(){
+  renderChatRoom();
+})
