@@ -89,13 +89,14 @@ function renderChatRoomHeader() {
       childsnapshot.forEach(function(child) {
        
           if (child.key !== userKey){
+              $(".list").empty();
               var photo = child.val().photo;
               var name = child.val().name;
               var status = child.val().status; 
               var lastdisconnect = child.val().lastdisconnect;
               console.log("Name:" + child.val().name);
               console.log("Status:" + child.val().status); 
-              $(".list").html(" <div class='clearfix'><img class='rounded-circle' src="+ photo +" alt='avatar' /><div class='about'><div class='name'>" + name + "</div><div class='status'><i class='fa fa-circle "+ status + "'></i>" + lastdisconnect+"</div></div></div>");
+              $(".list").append(" <div class='clearfix'><img class='rounded-circle' src="+ photo +" alt='avatar' /><div class='about'><div class='name'>" + name + "</div><div class='status'><i class='fa fa-circle "+ status + "'></i>" + lastdisconnect+"</div></div></div>");
 
   
           }
