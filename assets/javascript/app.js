@@ -104,11 +104,11 @@ function renderChatRoomHeader() {
   
 
   function renderchatRoomMessage() {
-    $('#chat-submit').on("click",function(){
+    $('.chat-submit').on("click",function(){
       var comment = $('#message-to-send').val().trim();
       var d = new Date();
       var timestamp = d.toUTCString();
-      console.log(comment)
+      console.log("Message : "+comment);
       if(comment !== ""){
         chatRef.push({uID:userKey,name:name,photo:photo,message:comment,timestamp:timestamp});
         $('#message-to-send').val(""); // empty the input text field
@@ -124,111 +124,17 @@ function renderChatRoomHeader() {
       var d = new Date();
       var n = d.toUTCString();
       if (userID == userKey) {
-        $('.message-box').append('<div><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i>'+name+'</span><span class="message-data-time" >'+timestamp+'</span></div><div class="message my-message">'+message+'</div></div>');
+        $('.message-box').prepend('<div><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i>'+name+'</span><span class="message-data-time" >'+timestamp+'</span></div><div class="message my-message">'+message+'</div></div>');
       
       } else {
         
-        $('.message-box').append('<div class="clearfix"><div class="message-data align-right"><span class="message-data-time" >'+timestamp+'</span> &nbsp; &nbsp;<span class="message-data-name" >'+name+'</span> <i class="fa fa-circle me"></i></div><div class="message other-message float-right">'+message+'</div></div>');
+        $('.message-box').prepend('<div class="clearfix"><div class="message-data align-right"><span class="message-data-time" >'+timestamp+'</span> &nbsp; &nbsp;<span class="message-data-name" >'+name+'</span> <i class="fa fa-circle me"></i></div><div class="message other-message float-right">'+message+'</div></div>');
       }
     });
   
   }
 
 
-//Chat Room Function
-(function(){
-  
-  var chat = {
-    messageToSend: '',
-
-    init: function() {
-      this.cacheDOM();
-      this.bindEvents();
-      this.render();
-    },
-    cacheDOM: function() {
-      this.$chatHistory = $('.chat-history');
-      this.$button = $('button');
-      this.$textarea = $('#message-to-send');
-      this.$chatHistoryList =  this.$chatHistory.find('ul');
-    },
-    bindEvents: function() {
-      this.$button.on('click', this.addMessage.bind(this));
-      this.$textarea.on('keyup', this.addMessageEnter.bind(this));
-    },
-    render: function() {
-      this.scrollToBottom();
-      if (this.messageToSend.trim() !== '') {
-        var template = Handlebars.compile( $("#message-template").html());
-        var context = { 
-          messageOutput: this.messageToSend,
-          time: this.getCurrentTime()
-        };
-
-        this.$chatHistoryList.append(template(context));
-        this.scrollToBottom();
-        this.$textarea.val('');
-        
-        // responses
-        var templateResponse = Handlebars.compile( $("#message-response-template").html());
-        var contextResponse = { 
-          response: this.getRandomItem(this.messageResponses),
-          time: this.getCurrentTime()
-        };
-        
-        setTimeout(function() {
-          this.$chatHistoryList.append(templateResponse(contextResponse));
-          this.scrollToBottom();
-        }.bind(this), 1500);
-        
-      }
-      
-    },
-    
-    addMessage: function() {
-      this.messageToSend = this.$textarea.val()
-      this.render();         
-    },
-    addMessageEnter: function(event) {
-        // enter was pressed
-        if (event.keyCode === 13) {
-          this.addMessage();
-        }
-    },
-    scrollToBottom: function() {
-       this.$chatHistory.scrollTop(this.$chatHistory[0].scrollHeight);
-    },
-    getCurrentTime: function() {
-      return new Date().toLocaleTimeString().
-              replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
-    },
-    getRandomItem: function(arr) {
-      return arr[Math.floor(Math.random()*arr.length)];
-    }
-    
-  };
-  
-  chat.init();
-  
-  var searchFilter = {
-    options: { valueNames: ['name'] },
-    init: function() {
-     // var userList = ['people-list', this.options];
-      var noItems = $('<li id="no-items-found">No items found</li>');
-      
-      //userList.on('updated', function(list) {
-      //  if (list.matchingItems.length === 0) {
-      //    $(list.list).append(noItems);
-      //  } else {
-      //    noItems.detach();
-      //  }
-      //});
-    }
-  };
-  
-  searchFilter.init();
-  
-})();
 
 $(document).ready(function(){
   renderChatRoomHeader();
