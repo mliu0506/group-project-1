@@ -14,30 +14,26 @@ var usersRef = database.ref('users/');
 var gamesRef = database.ref('games/');
 var staticsRef = database.ref('statics/');
 
-var name1 = "";
-var wins1 = 0;
-var losses1 = 0;
-var name2 = "";
-var wins2 = 0;
-var losses2 = 0;
-var choice1 = "";
-var choice2 = "";
+var gameID = "";
 var userKey = "";
 var photo ="";
+var name = "";
 var googleLogin = false;
 
 //Goggle Sign In function
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
-  var name = profile.getName();
   var ID = profile.getId();
   var email = profile.getEmail();
-  //store the photo URL
-  var photo = profile.getImageUrl();
+  //store the photo URL & Name
+  photo = profile.getImageUrl();
+  name = profile.getName();
   googleLogin = true;
   userKey = ID;
   usersRef.child(userKey).update({uID:ID,name,name,photo:photo,email:email,status:"online",lastdisconnect:""});
   console.log("Sign-in User key :" + userKey);
+  $(".user-photo").html("<img class='rounded-circle' src="+ photo +" alt='avatar' />");
+  $(".chat-with").text(name);
 
 }
 //Google Sign out function
