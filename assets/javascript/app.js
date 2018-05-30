@@ -38,6 +38,7 @@ function onSignIn(googleUser) {
   userKey = ID;
   usersRef.child(userKey).update({uID:ID,name,name,photo:photo,email:email,status:"online",lastdisconnect:""});
   console.log("Sign-in User key :" + userKey);
+  location.reload();
 }
 //Google Sign out function
 function signOut() {
@@ -70,7 +71,7 @@ function renderChatRoom() {
       var name = childsnapshot.val().name;
       console.log("Name:" + childsnapshot.val().photo);
       console.log("Name:" + childsnapshot.val().name);
-      $(".user-photo").html("<img src="+ photo +" alt='avatar' />");
+      $(".user-photo").html("<img class='round' src="+ photo +" alt='avatar' />");
       $(".chat-with").text(name);
    }
     });
