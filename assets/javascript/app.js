@@ -94,7 +94,7 @@ function renderChatRoomHeader() {
               var lastdisconnect = child.val().lastdisconnect;
               console.log("Name:" + child.val().name);
               console.log("Status:" + child.val().status); 
-              $(".list").append(" <div class='clearfix'><img class='rounded-circle' src="+ photo +" alt='avatar' /><div class='about'><div class='name'>" + name + "</div><div class='status'><i class='fa fa-circle offline'></i>" + lastdisconnect+"</div></div></div>");
+              $(".list").append(" <div class='clearfix'><img class='rounded-circle' src="+ photo +" alt='avatar' /><div class='about'><div class='name'>" + name + "</div><div class='status'><i class='fa fa-circle '"+ status + "'></i>" + lastdisconnect+"</div></div></div>");
 
   
           }
