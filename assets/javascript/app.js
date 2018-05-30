@@ -125,7 +125,7 @@ function renderChatRoomHeader() {
       var timestamp = childSnapshot.val().timestamp;
       var d = new Date();
       var n = d.toUTCString();
-      if (userID == userKey) {
+      if (userID === userKey) {
         $('.message-box').prepend('<div><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i>'+username+'</span><span class="message-data-time" >'+timestamp+'</span></div><div class="message my-message">'+message+'</div></div>');
       
       } else {
