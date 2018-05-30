@@ -71,7 +71,7 @@ function renderChatRoom() {
       var name = childsnapshot.val().name;
       console.log("Photo:" + childsnapshot.val().photo);
       console.log("Name:" + childsnapshot.val().name);
-      $(".user-photo").html("<img class='rounded' src="+ photo +" alt='avatar' />");
+      $(".user-photo").html("<img class='rounded-circle' src="+ photo +" alt='avatar' />");
       $(".chat-with").text(name);
    }
     });
