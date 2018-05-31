@@ -34,6 +34,7 @@ function onSignIn(googleUser) {
   console.log("Sign-in User key :" + userKey);
   $(".user-photo").html("<img class='rounded-circle' src="+ photo +" alt='avatar' />");
   $(".chat-with").text(name);
+  window.location.reload(true);
 
 }
 //Google Sign out function
@@ -64,10 +65,7 @@ $("#signin").on("click", function() {
   location.reload(); // refresh
 });
 
-function loginComplete(evt) {
-  console.log("Login Complete");
-  window.location.reload(); 
-}
+
 
 function renderChatRoomHeader() {
   // when ever the user DB value is being update, the following function will be trigger
@@ -147,6 +145,6 @@ $(document).ready(function(){
   renderChatRoomHeader();
   renderUserList();
   renderchatRoomMessage();
-  xhr.addEventListener("load", loginComplete);
+
 
 })
