@@ -39,7 +39,6 @@ function onSignIn(googleUser) {
   $(".user-photo").html("<img class='rounded-circle' src="+ photo +" alt='avatar' />");
   $(".chat-with").text(name);
   setCookie("fbuID", userKey, 30); //save the uID into the cookie
-  startGame(); //reset the game
 
 }
 //Google Sign out function
@@ -76,11 +75,11 @@ function startGame() {
     if (userKey !== "") {
     //Reset the Game button
     if (checkIfGameExists(userKey)) {
-      $(".delete-game").hide();
-      $(".create-game").show();
-    } else {
-      $(".create-game").hide();
       $(".delete-game").show();
+      $(".create-game").hide();
+    } else {
+      $(".create-game").show();
+      $(".delete-game").hide();
     }
     //Refresh the message
     chatRef.once("value",function(childSnapshot){
