@@ -64,6 +64,10 @@ $("#signin").on("click", function() {
   location.reload(); // refresh
 });
 
+$('.chat-with').change(function() {
+  location.reload(); // refresh
+});
+
 function renderChatRoomHeader() {
   // when ever the user DB value is being update, the following function will be trigger
   usersRef.on("child_added", function(childsnapshot) {
