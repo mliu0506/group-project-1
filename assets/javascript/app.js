@@ -34,10 +34,7 @@ function onSignIn(googleUser) {
   console.log("Sign-in User key :" + userKey);
   $(".user-photo").html("<img class='rounded-circle' src="+ photo +" alt='avatar' />");
   $(".chat-with").text(name);
-  window.onload = function() {
 
-    window.location.reload();
-};
 
 }
 //Google Sign out function
@@ -56,14 +53,6 @@ function signOut() {
 $("#signout").on("click", function() {
   if (googleLogin === true) { 
     signOut(); // Google logout
-  }
-  location.reload(); // refresh
-});
-
-//Log in function
-$("#signin").on("click", function() {
-  if (googleLogin === true) { 
-    onSignIn(googleUser); // Google login
   }
   location.reload(); // refresh
 });
