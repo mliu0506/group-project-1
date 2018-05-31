@@ -2,22 +2,22 @@
 /*
     TODO STEVEN:
     1) Plan out flow of data
-    2) Either return values or depend on global variables
-    3) Clean up functions
-    4) GamePage.html and GamePage Chat
+    2) GamePage.html and GamePage Chat
 */
+//TODO FIREBASE LISTENER HERE
 
-function activateCamera(id){
-    //Function to activate computer's camera and hook it to DOM element id
-    //Note: will cause browser to request premission each time
-    Webcam.attach(id);
+//Active and attach camera to DOM element
+Webcam.attach('#my_camera');
+
+function timeDelay(){
+    //TEMP Function to delay taking a picture
+    setTimeout(take_snapshot, 5000);
 }
 
 function take_snapshot(){
     /*Function to snap a picture and passing in a callback function
     image data will be passed as data_uri*/
     Webcam.snap(function(data_uri){
-        //TODO send and update to Firebase
         detectFace(data_uri);
     });
     //Turns off Camera
@@ -42,9 +42,54 @@ function detectFace(data_uri){
             image_base64: data64
         }
     }).then(function(response){
-        //TODO face logic here
-        console.log(response.faces[0].attributes.emotion.happiness);
+        //DEBUG LOG
+        /*console.log(response.faces);
         var json = JSON.stringify(response, null, ' ');
-        console.log(json);
+        console.log(json);*/
+
+        if(response.faces[0] == null){
+            //Face++ could not detect a face in the given image, retake picture.
+            //TODO: Either change take_snapshot or create a timer function
+            timeDelay(); //TEMP function
+
+            //DEBUG LOG
+            console.log("Take Picture Again");
+        }
+        else{
+            //Face++ detected a face, start analying emotions
+            var emotions = response.faces[0].attributes.emotion;
+            var emotionValue = Math.max(emotions.happiness,emotions.surprise,emotions.neutral);
+            var emotion;
+            //compare most likely emotion
+            switch (emotionValue){
+                case emotions.happiness:
+                    emotion = "Happy";
+                    console.log("you are happy");
+                    break;
+                case emotions.surprise:
+                    emotion = "Surprise";
+                    console.log("you are suprised");
+                    break;
+                case emotions.neutral:
+                    emotion = "Neutral";
+                    console.log("you are neutral");
+            }
+
+            //TODO SEND TO FIREBASE update player data
+
+            //DEBUG LOG
+            //console.log("face detected");
+            console.log("Happiness: " + emotions.happiness);
+            console.log("Surprise: " + emotions.surprise);
+            console.log("Neutral: " + emotions.neutral)
+        }
     });
 }
+
+/*TODO RPS LOGIC HERE AND UPDATE FIREBASE*/
+
+//RPS logic: Happy > Neutral, Neutral > Suprise, Suprise > Happy
+//NOTE: Global variable works
+/*gamesRef.set({
+    gameID: "Game1",
+});*/
