@@ -8,29 +8,33 @@ var config = {
     messagingSenderId: "369092792103"
 };
 firebase.initializeApp(config);
+
+//Global variables
+//Reminder -  declare the  app.js before your javascript 
+
+// Firebase DB
 var database = firebase.database();
 var chatRef = database.ref('chats');
 var usersRef = database.ref('users/');
 var gamesRef = database.ref('games/');
-var staticsRef = database.ref('history/');
 
+// Global variable
 var gameID = "";
 var userKey = "";
 var photo ="";
 var name = "";
-var googleLogin = false;
+
 
 //Goggle Sign In function
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
   var ID = profile.getId();
   var email = profile.getEmail();
-  //store the photo URL & Name
+  //store the userID, photo URL & Name in the global variable
   photo = profile.getImageUrl();
   name = profile.getName();
-  googleLogin = true;
   userKey = ID;
-  usersRef.child(userKey).update({uID:ID,name,name,photo:photo,email:email,status:"online",lastdisconnect:""});
+  usersRef.child(userKey).update({uID:ID,name,name,photo:photo,email:email,status:"online",lastdisconnect:"",numberofgame:"",totwin:"",totlose:""});
   console.log("Sign-in User key :" + userKey);
   $(".user-photo").html("<img class='rounded-circle' src="+ photo +" alt='avatar' />");
   $(".chat-with").text(name);
@@ -44,20 +48,57 @@ function signOut() {
   var lastdisconnect = d.toUTCString();
   auth2.signOut().then(function () {
     usersRef.child(userKey).update({status:"offline",lastdisconnect:lastdisconnect});
-    googleLogin = false;
     console.log('User signed out.');
   });
 }
 
-//Log out function
-$("#signout").on("click", function() {
-  if (googleLogin === true) { 
-    signOut(); // Google logout
-  }
-  location.reload(); // refresh
-});
 
 
+//Setup the Game & reset values
+function startGame() {
+
+    //Log out function
+    $("#signout").on("click", function() {
+      if (googleLogin === true) { 
+          signOut(); // Google logout
+      }
+      location.reload(); // refresh
+    });
+  
+    //Reset the Game button
+    if (checkIfGameExists(userKey)) {
+      $(".delete-game").hide();
+      $(".create-game").show();
+    } else {
+      $(".create-game").hide();
+      $(".delete-game").show();
+    }
+  
+    
+}
+
+// Tests to see if /users/<userId> has any data. 
+function checkIfUserExists(userId) {
+  usersRef.child(userId).once('value', function(snapshot) {
+    if (snapshot.val() !== null) {
+      return true;
+    } else {
+      return false;
+    } 
+  });
+}
+
+
+// Tests to see if /games/<userId> has any data. 
+function checkIfGameExists(userId) {
+  gamesRef.child(userId).once('value', function(snapshot) {
+    if (snapshot.val() !== null) {
+      return true;
+    } else {
+      return false;
+    } 
+  });
+}
 
 function renderChatRoomHeader() {
   // when ever the user DB value is being update, the following function will be trigger
@@ -139,11 +180,12 @@ function renderChatRoomHeader() {
       console.log("Create Game : "+gameID);
       if(gameID !== ""){
         gamesRef.child(gameID).update({status:'pending_palyer'});
-        gamesRef.child(gameID).child("players").child("player1").update({uID:userKey,win:0,lose:0,name:name,status:'pending_player'});
+        gamesRef.child(gameID).child("players").child("player1").update({uID:userKey,win:0,lose:0,name:name,status:'pending_player2'});
         $(".delete-game").show();
         $(".create-game").hide();
       }
     });
+
     $(".delete-game").on("click",function(){
       var gameID = userKey;
       var d = new Date();
@@ -151,22 +193,16 @@ function renderChatRoomHeader() {
       console.log("Delete Game : "+gameID);
       if(gameID !== ""){
         gamesRef.child(gameID).remove();
-       
         $(".delete-game").hide();
         $(".create-game").show();
-      }
+      } 
     });
-
-    
   }
 
 $(document).ready(function(){
-  $(".delete-game").hide();
-  $(".create-game").show();
+  startGame();
   renderChatRoomHeader();
   renderUserList();
   renderchatRoomMessage();
   createGameRoom();
-
-
-})
+});
