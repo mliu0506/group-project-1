@@ -62,7 +62,7 @@ function startGame() {
       signOut(); // Google logout
       location.reload(); // refresh
     });
-  
+   if (userKey !== "") {
     //Reset the Game button
     if (checkIfGameExists(userKey)) {
       $(".delete-game").hide();
@@ -72,7 +72,7 @@ function startGame() {
       $(".delete-game").show();
     }
   
-    
+  }
 }
 
 // Tests to see if /users/<userId> has any data. 
