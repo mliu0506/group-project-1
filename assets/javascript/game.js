@@ -7,7 +7,7 @@
 //TODO FIREBASE LISTENER HERE
 
 //Active and attach camera to DOM element
-Webcam.attach('#my_camera');
+//Webcam.attach('#my_camera');
 
 function timeDelay(){
     //TEMP Function to delay taking a picture
