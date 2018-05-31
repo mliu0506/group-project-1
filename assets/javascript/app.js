@@ -34,7 +34,10 @@ function onSignIn(googleUser) {
   console.log("Sign-in User key :" + userKey);
   $(".user-photo").html("<img class='rounded-circle' src="+ photo +" alt='avatar' />");
   $(".chat-with").text(name);
-  window.location.reload(true);
+  window.onload = function() {
+
+    window.location.reload();
+};
 
 }
 //Google Sign out function
