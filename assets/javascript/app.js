@@ -137,9 +137,9 @@ function renderChatRoomHeader() {
       var d = new Date();
       var timestamp = d.toUTCString();
       console.log("Create Game : "+gameID);
-      if(comment !== ""){
-        gameRef.child(gameID).set({status:'game_start'});
-        gameRef.child(gameID).child("players").child("player1").set({uID:userkey,win:0,lose:0,name:name});
+      if(gameID !== ""){
+        gameRef.child(gameID).set({status:'pending_palyer'});
+        gameRef.child(gameID).child("players").child("player1").set({uID:userkey,win:0,lose:0,name:name,status:'pending_palyer'});
     
       }
     });
