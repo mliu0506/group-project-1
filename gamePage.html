@@ -29,32 +29,37 @@
         <title>Face Battles</title>
     </head>
     <body>
-            <header> Face Battles </header>
-            <!-- Navigation -->
-            <a id="menu-toggle" href="#" class="btn btn-light btn-sm toggle"><i class="fa fa-bars" data-toggle="tooltip" title="MENU"></i></a>
-            <nav id="sidebar-wrapper">
-                <ul class="sidebar-nav">
-                    <a id="menu-close" href="#" class="btn btn-light btn-sm float-right toggle" hidden><i class="fa fa-times"></i></a>
-                    <li class="sidebar-brand">
-                        <a href="index.html" onclick="$('#menu-close').click();">Face Battles</a>
-                    </li>
-                    <li>
-                        <a href="chatroom.html" onclick="$('#menu-close').click();">User Login</a>
-                    </li>
-                    <li>
-                        <a href="gamehistory.html" onclick="$('#menu-close').click();">User Profile</a>
-                    </li>
-                    <li>
-                        <a href="chatroom.html" onclick="$('#menu-close').click();">Lobby / Chat Room</a>
-                    </li>
-                    <li>
-                        <a href="gameroom.html" onclick="$('#menu-close').click();">Game Room</a>
-                    </li>
-                    <li>
-                        <a id="signout" href="#" onclick="$('#menu-close').click();">User Logout</a>
-                    </li>
-                </ul>
-            </nav>
+        <!-- Navigation -->
+        <a id="menu-toggle" href="#" class="btn btn-light btn-sm toggle"><i class="fa fa-bars" data-toggle="tooltip" title="MENU"></i></a>
+        <nav id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <a id="menu-close" href="#" class="btn btn-light btn-sm float-right toggle" hidden><i class="fa fa-times"></i></a>
+                <li class="sidebar-brand">
+                    <a href="index.html" onclick="$('#menu-close').click();">Face Battles</a>
+                </li>
+                <li>
+                    <a href="chatroom.html" onclick="$('#menu-close').click();">User Login</a>
+                </li>
+                <li>
+                    <a href="gamehistory.html" onclick="$('#menu-close').click();">User Profile</a>
+                </li>
+                <li>
+                    <a href="chatroom.html" onclick="$('#menu-close').click();">Lobby / Chat Room</a>
+                </li>
+                <li>
+                    <a href="gameroom.html" onclick="$('#menu-close').click();">Game Room</a>
+                </li>
+                <li>
+                    <a id="signout" href="#" onclick="$('#menu-close').click();">User Logout</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- GAME PAGE -->
+        <!--TEMP HTML FOR TESTING-->
+        <div id="my_camera" style="width:320px; height:240px;"></div>
+        <div id="my_result"></div>
+        <a href="javascript:void(timeDelay())">Take Snapshot</a>
 
         <!--SCRIPTS-->
         <!--  Bootstrap 4 JavaScript -->
@@ -75,6 +80,8 @@
         <script src="assets/javascript/app.js"></script>
         <script src="assets/javascript/coverflow.js"></script>
         <script src="assets/javascript/sidebar.js"></script>
+        <!-- WebcamJS Library -->
+        <script src="assets/javascript/webcam.min.js"></script>
         <!-- Game Logic JavaScript-->
         <script src="assets/javascript/game.js"></script>
     </body>
