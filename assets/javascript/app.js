@@ -64,9 +64,10 @@ $("#signin").on("click", function() {
   location.reload(); // refresh
 });
 
-$('.chat-with').change(function() {
-  location.reload(); // refresh
-});
+function loginComplete(evt) {
+  console.log("Login Complete");
+  window.location.reload(); 
+}
 
 function renderChatRoomHeader() {
   // when ever the user DB value is being update, the following function will be trigger
@@ -146,4 +147,6 @@ $(document).ready(function(){
   renderChatRoomHeader();
   renderUserList();
   renderchatRoomMessage();
+  xhr.addEventListener("load", loginComplete);
+
 })
