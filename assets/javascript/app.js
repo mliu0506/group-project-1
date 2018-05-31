@@ -34,11 +34,12 @@ function onSignIn(googleUser) {
   photo = profile.getImageUrl();
   name = profile.getName();
   userKey = ID;
-  usersRef.child(userKey).update({uID:ID,name,name,photo:photo,email:email,status:"online",lastdisconnect:"",numberofgame:"",totwin:"",totlose:""});
+  usersRef.child(userKey).update({uID:ID,name,name,photo:photo,email:email,status:"online",lastdisconnect:"",totgames:"",totwin:"",totlose:""});
   console.log("Sign-in User key :" + userKey);
   $(".user-photo").html("<img class='rounded-circle' src="+ photo +" alt='avatar' />");
   $(".chat-with").text(name);
-
+  setCookie("fbuID", userKey, 30); //save the uID into the cookie
+  startgame(); //reset the game
 
 }
 //Google Sign out function
@@ -53,16 +54,26 @@ function signOut() {
 }
 
 
-
-//Setup the Game & reset values
-function startGame() {
-
+function logout() {
     //Log out function
     $("#signout").on("click", function() {
       signOut(); // Google logout
       location.reload(); // refresh
     });
-   if (userKey !== "") {
+}
+
+//Setup the Game & reset values
+function startGame() {
+
+    //Hide the default Game button
+    $(".delete-game").hide();
+    $(".create-game").hide();
+   
+    if (userKey === "") {
+     userKey= getCookie("fbuID"); //get the uID from the cookie
+    }
+    
+    if (userKey !== "") {
     //Reset the Game button
     if (checkIfGameExists(userKey)) {
       $(".delete-game").hide();
@@ -71,7 +82,23 @@ function startGame() {
       $(".create-game").hide();
       $(".delete-game").show();
     }
-  
+    //Refresh the message
+    chatRef.once("value",function(childSnapshot){
+      var message = childSnapshot.val().message;
+      var username = childSnapshot.val().name;
+      var userID = childSnapshot.val().uID;
+      var photo = childSnapshot.val().photo;
+      var timestamp = childSnapshot.val().timestamp;
+      var d = new Date();
+      var n = d.toUTCString();
+      if (userID === userKey) {
+        $('.message-box').prepend('<div><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i>'+username+'</span><span class="message-data-time" >'+timestamp+'</span></div><div class="message my-message">'+message+'</div></div>');
+      
+      } else {
+        
+        $('.message-box').prepend('<div class="clearfix"><div class="message-data align-right"><span class="message-data-time" >'+timestamp+'</span> &nbsp; &nbsp;<span class="message-data-name" >'+username+'</span> <i class="fa fa-circle me"></i></div><div class="message other-message float-right">'+message+'</div></div>');
+      }
+    });
   }
 }
 
@@ -203,4 +230,5 @@ $(document).ready(function(){
   renderUserList();
   renderchatRoomMessage();
   createGameRoom();
+  logout();
 });
