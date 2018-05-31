@@ -139,11 +139,25 @@ function renderChatRoomHeader() {
       console.log("Create Game : "+gameID);
       if(gameID !== ""){
         gamesRef.child(gameID).update({status:'pending_palyer'});
-        gamesRef.child(gameID).child("players").child("player1").update({uID:userKey,win:0,lose:0,name:name,status:'pending_palyer'});
+        gamesRef.child(gameID).child("players").child("player1").update({uID:userKey,win:0,lose:0,name:name,status:'pending_player'});
         $(".delete-game").show();
         $(".create-game").hide();
       }
     });
+    $(".delete-game").on("click",function(){
+      var gameID = userKey;
+      var d = new Date();
+      var timestamp = d.toUTCString();
+      console.log("Delete Game : "+gameID);
+      if(gameID !== ""){
+        gamesRef.child(gameID).remove();
+       
+        $(".delete-game").hide();
+        $(".create-game").show();
+      }
+    });
+
+    
   }
 
 $(document).ready(function(){
