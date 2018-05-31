@@ -59,9 +59,7 @@ function startGame() {
 
     //Log out function
     $("#signout").on("click", function() {
-      if (googleLogin === true) { 
-          signOut(); // Google logout
-      }
+      signOut(); // Google logout
       location.reload(); // refresh
     });
   
