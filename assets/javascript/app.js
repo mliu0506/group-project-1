@@ -126,6 +126,7 @@ function checkIfUserExists(userId) {
 // Tests to see if /games/<userId> has any data. 
 function checkIfGameExists(userId) {
   gamesRef.child(userId).once('value', function(snapshot) {
+    console.log("check if game exist :"+ userId +" value :" + snapshot.val());
     if (snapshot.val() !== null) {
       return true;
     } else {
