@@ -5,7 +5,7 @@
       $(".gameroom").empty();
       childsnapshot.forEach(function(child) {
        // if (child.key !== userKey){
-          
+          var gameID = child.key
           var photo = child.val().photo;
           var name = child.val().name;
           var status = child.val().status; 
@@ -13,14 +13,30 @@
           console.log("Game Name:" + child.val().name);
           console.log("Game Status:" + child.val().status);
           if (status ==="pending") {
-            $(".gameroom").append("<div class='chat'><div class='chat-header clearfix'><img class='rounded-circle' src="+ photo +" alt='avatar' /><div class='chat-about'><div class='chat-with'> Game created by " + name + "</div><span class='message-data-time'>" + timestamp + "</span> &nbsp; &nbsp;<button class='joingame'>Join Game</button></div><i class='fa fa-star'></i></div>");
+            $(".gameroom").append("<div class='chat'><div class='chat-header clearfix'><img class='rounded-circle' src="+ photo +" alt='avatar' /><div class='chat-about'><div class='chat-with'> Game created by " + name + "</div><span class='message-data-time'>" + timestamp + "</span> &nbsp; &nbsp;<button class='joingame' data-value='"+ gameID + "'>Join Game</button></div><i class='fa fa-star'></i></div>");
           }
        // }
       });
     });
   }
 
+
+function joinGame() {
+  $(".joingame").on("click",function(){
+    var gameID = $(".joingame").attr("data-value");
+    var d = new Date();
+    var timestamp = d.toUTCString();
+    console.log("Create Game : "+gameID);
+    if(gameID !== ""){
+      gamesRef.child(gameID).update({status:'matched',timestamp:timestamp});
+      gamesRef.child(gameID).child("players").child("player2").update({uID:userKey,win:0,lose:0,name:name,status:'matched_player2'});
+      $(".joingame").hide();
+    }
+  });
+}
+
 $(document).ready(function(){
   renderGameRoom();
+  joinGame();
   logout();
 });
