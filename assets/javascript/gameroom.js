@@ -23,7 +23,8 @@
 
 
 function joinGame() {
-  $("#joingame").on("click",function() {
+  $("#joingame").on("click",function(){
+    alert("join game");
     var gameID = $("#joingame").attr("data-value");
     var d = new Date();
     var timestamp = d.toUTCString();
