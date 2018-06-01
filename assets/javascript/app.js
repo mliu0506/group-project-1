@@ -69,15 +69,20 @@ function startGame() {
     //Hide the default Game button
     $(".delete-game").hide();
     $(".create-game").hide();
-   
+    
+    // Check to see if there is Cookie
     if (userKey === "") {
-     userKey= getCookie("fbuID"); //get the uID from the cookie
-     //lookup the photo and the name
-     usersRef.once("value",function(childSnapshot){
-      //save into the Golbal variable 
-      photo = childSnapshot.child(userKey).val().photo;
-      name = childSnapshot.child(userKey).val().name;
-     });
+     var cookieKey= getCookie("fbuID"); //get the uID from the cookie
+     console.log("Cookie Key: " + cookieKey);
+     if ((cookieKey !== "") || (cookieKey !== null)) {
+        //lookup the photo and the name
+        usersRef.child(cookieKey).once("value",function(childSnapshot){
+          //save into the Golbal variable 
+          photo = childSnapshot.val().photo;
+          name = childSnapshot.val().name;
+        });
+        userKey = cookieKey;
+      }
     }
     
     if (userKey !== "") {
@@ -111,23 +116,15 @@ function startGame() {
   }
 }
 
-// Tests to see if /users/<userId> has any data. 
-function checkIfUserExists(userId) {
-  usersRef.child(userId).once('value', function(snapshot) {
-    if (snapshot.val() === null) {
-      return false;
-    } else {
-      return true;
-    } 
-  });
-}
+
 
 
 // Tests to see if /games/<userId> has any data. 
 function checkIfGameExists(userId) {
   gamesRef.child(userId).once('value', function(snapshot) {
-    console.log("check if game exist :"+ userId +" value :" + snapshot.val());
-    if (snapshot.val() !== null) {
+    var status = childSnapshot.val().status;
+    console.log("Game exist :"+ userId +" value :" + status);
+    if (status === "pending") {
       return true;
     } else {
       return false;
