@@ -262,5 +262,6 @@ $(document).ready(function(){
   renderUserList();
   renderchatRoomMessage();
   createGameRoom();
+  renderGameRoom();
   logout();
 });
