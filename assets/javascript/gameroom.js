@@ -13,7 +13,7 @@
           console.log("Game Name:" + child.val().name);
           console.log("Game Status:" + child.val().status);
           if (status ==="pending") {
-            $(".gameroom").append("<BR><div class='chat'><div class='chat-header clearfix'><img class='rounded-circle' src="+ photo +" alt='avatar' /><div class='chat-about'><div class='chat-with'> Game created by " + name + "</div><span class='message-data-time'>" + timestamp + "</span></div><button id='joingame' data-value='"+ gameID + "'>Join Game</button><i class='fa fa-star'></i></div></div>");
+            $(".gameroom").append("<BR><div class='chat'><div class='chat-header clearfix'><img class='rounded-circle' src="+ photo +" alt='avatar' /><div class='chat-about'><div class='chat-with'> Game created by " + name + "</div><span class='message-data-time'>" + timestamp + "</span></div><button class='join-game' data-value='"+ gameID + "'>Join Game</button><i class='fa fa-star'></i></div></div>");
             $(".gameroom").append("<BR>");
           }
        // }
@@ -23,9 +23,9 @@
 
 
 function joinGame() {
-  $("#joingame").on("click",function(){
+  $(".join-game").on("click",function(){
     alert("join game");
-    var gameID = $("#joingame").attr("data-value");
+    var gameID = $(".join-game").attr("data-value");
     var d = new Date();
     var timestamp = d.toUTCString();
     console.log("Joined Game : "+ gameID);
@@ -33,7 +33,7 @@ function joinGame() {
       gamesRef.child(gameID).update({status:'matched',timestamp:timestamp});
       gamesRef.child(gameID).child("players").child("player1").update({status:'matched_players2'});
       gamesRef.child(gameID).child("players").child("player2").update({uID:userKey,win:0,lose:0,name:name,status:'matched_player2'});
-      $("#joingame").hide();
+      $(".join-game").hide();
     }
   });
 }
