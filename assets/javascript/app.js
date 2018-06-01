@@ -121,7 +121,7 @@ function startGame() {
 
 // Tests to see if /games/<userId> has any data. 
 function checkIfGameExists(userId) {
-  gamesRef.child(userId).once('value', function(snapshot) {
+  gamesRef.child(userId).once('value', function(childSnapshot) {
     var status = childSnapshot.val().status;
     console.log("Game exist :"+ userId +" value :" + status);
     if (status === "pending") {
