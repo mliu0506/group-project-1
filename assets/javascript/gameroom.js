@@ -23,7 +23,7 @@
 
 
 function joinGame() {
-  $(".join-game").on("click",function(){
+  $(".gameroom").on("click",".join-game",function(){
     alert("join game");
     var gameID = $(".join-game").attr("data-value");
     var d = new Date();
