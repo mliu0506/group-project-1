@@ -26,6 +26,9 @@
         <!-- Style CSS -->
         <link rel="stylesheet" href="assets/css/coverflow.css">
 
+        <!-- Game Page Css-->
+        <link rel="stylesheet" href="assets/css/gamePage.css">
+
         <title>Face Battles</title>
     </head>
     <body>
@@ -56,10 +59,46 @@
         </nav>
 
         <!-- GAME PAGE -->
-        <!--TEMP HTML FOR TESTING-->
-        <div id="my_camera" style="width:320px; height:240px;"></div>
-        <div id="my_result"></div>
-        <a href="javascript:void(timeDelay())">Take Snapshot</a>
+        <header>
+            <h1>GAME ROOM</h1>
+        </header>
+        <!--Game Zone-->
+        <section class="container-fluid">
+            <div class="row gameZone justify-content-center">
+                <!--Player Area-->
+                <div class="col-5 col-md-4 p-0">
+                    <section id="playerZone" class="gameBox">
+                        Player Zone
+                        <div id="my_camera" style="width:320px; height:240px;"></div>
+                        <div id="my_result"></div>
+                        <a href="javascript:void(take_snapshot())">Take Snapshot</a>
+                    </section>
+                </div>
+                <!--Opponent Area-->
+                <div class="col-5 col-md-4 p-0">
+                    <section id="opponentZone" class="gameBox">
+                        Opponent Zone
+                    </section>
+                </div>
+                <!--Message board-->
+                <div class="col-10 col-md-4 p-0">
+                    <section id="chatZone" class="gameBox">
+                        <form>
+                            <div class="form-group">
+                                <textarea readonly id="messageList" class="form-control"></textarea>
+                                <div class="row px-3">
+                                    <input type="text" placeholder="Message" id="message" class="form-control col-9" />
+                                    <button type="submit" id="submitMessage" class="col-3">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </section>
+
+        <!--TEMP HTML-->
+        <button id="leaveGame" class="btn btn-primary">Leave Game</button>
 
         <!--SCRIPTS-->
         <!--  Bootstrap 4 JavaScript -->
