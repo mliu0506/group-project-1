@@ -26,9 +26,10 @@ function joinGame() {
     var gameID = $(".joingame").attr("data-value");
     var d = new Date();
     var timestamp = d.toUTCString();
-    console.log("Create Game : "+gameID);
+    console.log("Joined Game : "+gameID);
     if(gameID !== ""){
       gamesRef.child(gameID).update({status:'matched',timestamp:timestamp});
+      gamesRef.child(gameID).child("players").child("player1").update({status:'matched_players2'});
       gamesRef.child(gameID).child("players").child("player2").update({uID:userKey,win:0,lose:0,name:name,status:'matched_player2'});
       $(".joingame").hide();
     }
