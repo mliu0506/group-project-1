@@ -72,6 +72,12 @@ function startGame() {
    
     if (userKey === "") {
      userKey= getCookie("fbuID"); //get the uID from the cookie
+     //lookup the photo and the name
+     usersRef.once("value",function(childSnapshot){
+      //save into the Golbal variable 
+      photo = childSnapshot.child(userKey).val().photo;
+      name = childSnapshot.child(userKey).val().name;
+     });
     }
     
     if (userKey !== "") {
@@ -207,7 +213,7 @@ function renderChatRoomHeader() {
       var timestamp = d.toUTCString();
       console.log("Create Game : "+gameID);
       if(gameID !== ""){
-        gamesRef.child(gameID).update({status:'pending'});
+        gamesRef.child(gameID).update({status:'pending',name:name,photo:photo,timestamp:timestamp});
         gamesRef.child(gameID).child("players").child("player1").update({uID:userKey,win:0,lose:0,name:name,status:'pending_player2'});
         $(".delete-game").show();
         $(".create-game").hide();
@@ -226,6 +232,29 @@ function renderChatRoomHeader() {
       } 
     });
   }
+
+  function renderGameRoom() {
+    // when ever the user DB value is being update, the following function will be trigger
+    gamesRef.on("value", function(childsnapshot) {
+      console.log("User List :" + userKey);
+      $(".gameroom").empty();
+      childsnapshot.forEach(function(child) {
+        if (child.key !== userKey){
+          
+          var photo = child.val().photo;
+          var name = child.val().name;
+          var status = child.val().status; 
+          var timestamp = child.val().timestamp;
+          console.log("Game Name:" + child.val().name);
+          console.log("Game Status:" + child.val().status);
+          if (status ==="pending") {
+            $(".gameroom").append("<div class='chat'><div class='chat-header clearfix'><img class='rounded-circle' src="+ photo +" alt='avatar' /><div class='chat-about'><div class='chat-with'> Game created by " + name + "</div><span class='message-data-time'>" + timestamp + "</span> &nbsp; &nbsp;<button class='joingame'>Join Game</button></div></div><i class='fa fa-star'></i></div>");
+          }
+        }
+      });
+    });
+  }
+
 
 $(document).ready(function(){
   startGame();
