@@ -17,6 +17,7 @@ var database = firebase.database();
 var chatRef = database.ref('chats');
 var usersRef = database.ref('users/');
 var gamesRef = database.ref('games/');
+var historyRef = database.ref('history/');
 
 // Global variable
 var gameID = "";
@@ -48,7 +49,8 @@ function signOut() {
   var lastdisconnect = d.toUTCString();
   auth2.signOut().then(function () {
     usersRef.child(userKey).update({status:"offline",lastdisconnect:lastdisconnect});
-    console.log('User signed out.');
+    console.log(userKey + 'User signed out.');
+
   });
 }
 
@@ -90,12 +92,14 @@ function startGame() {
       var timestamp = childSnapshot.val().timestamp;
       var d = new Date();
       var n = d.toUTCString();
-      if (userID === userKey) {
-        $('.message-box').prepend('<div><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i>'+username+'</span><span class="message-data-time" >'+timestamp+'</span></div><div class="message my-message">'+message+'</div></div>');
+      if (message !== undefined) {
+        if (userID === userKey) {
+          $('.message-box').prepend('<div><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i>'+username+'</span><span class="message-data-time" >'+timestamp+'</span></div><div class="message my-message">'+message+'</div></div>');
       
-      } else {
+        } else {
         
-        $('.message-box').prepend('<div class="clearfix"><div class="message-data align-right"><span class="message-data-time" >'+timestamp+'</span> &nbsp; &nbsp;<span class="message-data-name" >'+username+'</span> <i class="fa fa-circle me"></i></div><div class="message other-message float-right">'+message+'</div></div>');
+          $('.message-box').prepend('<div class="clearfix"><div class="message-data align-right"><span class="message-data-time" >'+timestamp+'</span> &nbsp; &nbsp;<span class="message-data-name" >'+username+'</span> <i class="fa fa-circle me"></i></div><div class="message other-message float-right">'+message+'</div></div>');
+        }
       }
     });
   }
@@ -203,7 +207,7 @@ function renderChatRoomHeader() {
       var timestamp = d.toUTCString();
       console.log("Create Game : "+gameID);
       if(gameID !== ""){
-        gamesRef.child(gameID).update({status:'pending_palyer'});
+        gamesRef.child(gameID).update({status:'pending'});
         gamesRef.child(gameID).child("players").child("player1").update({uID:userKey,win:0,lose:0,name:name,status:'pending_player2'});
         $(".delete-game").show();
         $(".create-game").hide();
