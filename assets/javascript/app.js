@@ -114,10 +114,10 @@ function startGame() {
 // Tests to see if /users/<userId> has any data. 
 function checkIfUserExists(userId) {
   usersRef.child(userId).once('value', function(snapshot) {
-    if (snapshot.val() !== null) {
-      return true;
-    } else {
+    if (snapshot.val() === null) {
       return false;
+    } else {
+      return true;
     } 
   });
 }
