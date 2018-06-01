@@ -22,11 +22,11 @@
 
 
 function joinGame() {
-  $(".joingame").on("click",function(){
+  $(".joingame").on("click",function() {
     var gameID = $(".joingame").attr("data-value");
     var d = new Date();
     var timestamp = d.toUTCString();
-    console.log("Joined Game : "+gameID);
+    console.log("Joined Game : "+ gameID);
     if(gameID !== ""){
       gamesRef.child(gameID).update({status:'matched',timestamp:timestamp});
       gamesRef.child(gameID).child("players").child("player1").update({status:'matched_players2'});
@@ -39,5 +39,4 @@ function joinGame() {
 $(document).ready(function(){
   renderGameRoom();
   joinGame();
-  logout();
 });
