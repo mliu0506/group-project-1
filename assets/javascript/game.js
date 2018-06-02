@@ -105,7 +105,7 @@ $(function(){
             //TODO display score and update game status//
         }
         displayPlayerScores();
-        $("#playerName").text(playerSnap.player1.name);
+        $("#playerName").text(playerSnap.val().player1.name);
         /*if (isplayer2){
             //Display player1 score in opponent zone
             $("#opponentWin").text(snapScore.val().player1.win);
