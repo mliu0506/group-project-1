@@ -41,7 +41,7 @@ gamesRef.child(gameID).child('chat').on('child_added', function(chatsnapshot){
 });
 */
 //Active and attach camera to DOM element
-//Webcam.attach('#my_camera');
+Webcam.attach('#my_camera');
 
 function timeDelay(){
     //TEMP Function to delay taking a picture
@@ -116,6 +116,7 @@ function detectFace(data_uri){
                 likely: likely
             }
             //FirebasePath.update(playerData);
+            displayPlayerImage(data_uri);
 
             //DEBUG LOG
             /*console.log("face detected");
@@ -138,6 +139,18 @@ function likelyEmotion(value){
     else{
         return "Likely";
     }
+}
+
+function displayPlayerImage(data_uri){
+    //Function to display player image in the image section
+    $("#playerImage").empty();
+    $("#my_camera").css({display: 'none'});
+    var img = $("<img>");
+    img.attr({
+        src: data_uri,
+        class: 'img-fluid'
+    });
+    $("#playerImage").append(img);
 }
 
 /*TODO RPS LOGIC HERE AND UPDATE FIREBASE*/
@@ -193,4 +206,9 @@ $(function(){
         //Clear chat fields
         $("#message").val("");
     });
+});
+
+$("#leaveGame").on("click", function(){
+    $("#my_camera").css({display: "block"});
+    console.log("left the game");
 });
