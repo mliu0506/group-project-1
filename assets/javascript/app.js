@@ -68,7 +68,7 @@ function startGame() {
 
     //Hide the default Game button
     $(".delete-game").hide();
-    $(".create-game").hide();
+    $(".create-game").show();
     
     // Check to see if there is Cookie
     if (userKey === "") {
