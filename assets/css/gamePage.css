@@ -23,6 +23,18 @@ header{
     resize: none;
 }
 
+.imageBox{
+    width: 90%;
+    height: 40vh;
+    border: 1px solid black;
+    margin: 3vh;
+}
+
+#my_camera{
+    width: 100%;
+    height: 35vh;
+}
+
 /*{
     border: 1px solid red;
 }*/
