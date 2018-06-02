@@ -87,7 +87,7 @@ function startGame() {
     
     if (userKey !== "") {
     //Reset the Game button
-    gamesRef.child(userKey).once('value', function(childSnapshot) {
+    gamesRef.child(userKey).on('value', function(childSnapshot) {
       var gameStatus = childSnapshot.val().status;
       console.log("Check Game status : " + gameStatus);
       if (gameStatus == "pending") {
