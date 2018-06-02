@@ -86,12 +86,14 @@ function startGame() {
           name = childSnapshot.val().name;
         });
         userKey = cookieKey;
+        gameID = userKey;
       }
     }
     
     if (userKey !== "") {
     //Reset the Game button
     gamesRef.child(userKey).on('value', function(childSnapshot) {
+      if (childSnapshot.val() !=null) {
       var gameStatus = childSnapshot.val().status;
       console.log("Check Game status : " + gameStatus);
       if (gameStatus == "pending") {
@@ -101,6 +103,7 @@ function startGame() {
         $(".create-game").show();
         $(".delete-game").hide();
       }
+    }
     });
 
     //Refresh the message
