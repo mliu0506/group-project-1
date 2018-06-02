@@ -212,8 +212,7 @@ function renderChatRoomHeader() {
 
   function createGameRoom() {
     $(".create-game").on("click",function(){
-      //window.open("gamePage.html", '_blank');  //open a new  window
-      document.location.href = "gamePage.html";   //open the same window
+
       gameID = userKey;
       var d = new Date();
       var timestamp = d.toUTCString();
@@ -224,6 +223,8 @@ function renderChatRoomHeader() {
         $(".delete-game").show();
         $(".create-game").hide();
       }
+      //window.open("gamePage.html", '_blank');  //open a new  window
+      document.location.href = "gamePage.html";   //open the same window
     });
 
     $(".delete-game").on("click",function(){

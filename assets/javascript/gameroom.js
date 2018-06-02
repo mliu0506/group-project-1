@@ -24,9 +24,7 @@
 
 function joinGame() {
   $(".gameroom").on("click",".join-game",function(){
-    //window.open("gamePage.html", '_blank');  //open a new  window
-    document.location.href = "gamePage.html";   //open the same window
-    var gameID = $(".join-game").attr("data-value");
+    gameID = $(".join-game").attr("data-value");
     var d = new Date();
     var timestamp = d.toUTCString();
     console.log("Joined Game : "+ gameID);
@@ -36,6 +34,8 @@ function joinGame() {
       gamesRef.child(gameID).child("players").child("player2").update({uID:userKey,win:0,lose:0,name:name,status:'matched_player2'});
       $(".join-game").hide();
     }
+    //window.open("gamePage.html", '_blank');  //open a new  window
+    document.location.href = "gamePage.html";   //open the same window
   });
 }
 
