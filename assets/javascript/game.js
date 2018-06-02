@@ -17,6 +17,10 @@ var totalWin;
 var totalLose;
 var totalGames;
 
+var intervalID;
+var timer;
+
+
 console.log("GameID: " + gameID);
 console.log("userKey: " + userKey);
 //Firebase Listeners
@@ -96,8 +100,18 @@ gamesRef.child(gameID).child('players').on('value', function(playerSnap){
                 usersRef.child(userKey).update({totlose: totalLose++})
         }
         usersRef.child(userKey).update({totgames: totalGames++})
-
-        //TODO display score and update game status//
+         //TODO display score and update game status//
+    }
+    displayPlayerScores();
+    if (isplayer2){
+        //Display player1 score in opponent zone
+        $("#opponentWin").text(snapScore.val().player1.win);
+        $("#opponentLose").text(snapScore.val().player1.lose);
+    }
+    else{
+        //Display player2 score in opponent zone
+        $("#opponentWin").text(snapScore.val().player2.win);
+        $("#opponentLose").text(snapScore.val().player2.lose);
     }
 });
 
@@ -115,10 +129,22 @@ gamesRef.child(gameID).child('chat').on('child_added', function(chatsnapshot){
     messageList.scrollTop(messageList[0].scrollHeight);
 });
 
+function displayPlayerScores(){
+    //Function to display player score
+    $("#playerWin").text(winScore);
+    $("#playerLose").text(loseScore);
+}
 //FUNCTIONS
 function startRPS(){
     //Start game
-    //TODO start intervals and webcam functions
+    $("#playerImage").empty();
+    timer = 5;
+    intervalID = setInterval(countdown, 1000);
+    timeDelay();
+}
+function countdown(){
+    timer--;
+    $("#playerImage").text(timer);
 }
 
 function timeDelay(){
@@ -129,6 +155,7 @@ function timeDelay(){
 function take_snapshot(){
     /*Function to snap a picture and passing in a callback function
     image data will be passed as data_uri*/
+    clearInterval(intervalID);
     Webcam.snap(function(data_uri){
         detectFace(data_uri);
         console.log("picture taken");
@@ -160,8 +187,8 @@ function detectFace(data_uri){
 
         if(response.faces[0] == null){
             //Face++ could not detect a face in the given image, retake picture.
-            //TODO: Either change take_snapshot or create a timer function
-            timeDelay(); //TEMP function
+            $("#playerImage").text("Take Picture Again");
+            setTimeout(startRPS, 2000);
 
             //DEBUG LOG
             console.log("Take Picture Again");
@@ -317,5 +344,6 @@ $(function(){
 $("#camTest").on("click", function(){
     $("#playerImage").empty();
     $("#my_camera").css({display: "block"});
-    console.log("left the game");
+    console.log("cam active");
+    startRPS();
 });
