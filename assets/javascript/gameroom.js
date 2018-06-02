@@ -24,7 +24,7 @@
 
 function joinGame() {
   $(".gameroom").on("click",".join-game",function(){
-    var gameID = $(".join-game").attr("data-value");
+    gameID = $(".join-game").attr("data-value");
     var d = new Date();
     var timestamp = d.toUTCString();
     console.log("Joined Game : "+ gameID);
