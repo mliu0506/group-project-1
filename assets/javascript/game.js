@@ -65,9 +65,11 @@ gamesRef.child(gameID).child('players').on('value', function(playerSnap){
         playerRef.update({status: 'game_complete'});
         if (isplayer2){
             var result = compareFace(playerSnap.val().player2.emotion, playerSnap.val().player1.emotion);
+            displayOpponentImage(playerSnap.val().player1.img, playerSnap.val().player1.emotion, playerSnap.val().player1.likely);
         }
         else{
             var result = compareFace(playerSnap.val().player1.emotion, playerSnap.val().player2.emotion);
+            displayOpponentImage(playerSnap.val().player2.img, playerSnap.val().player2.emotion, playerSnap.val().player2.likely);
         }
         //update scores
         switch (result){
@@ -77,6 +79,8 @@ gamesRef.child(gameID).child('players').on('value', function(playerSnap){
             case 'lose':
                 playerRef.update({lose: loseScore++});
         }
+
+        //TODO display score and update game status//
     }
 });
 
@@ -167,6 +171,7 @@ function detectFace(data_uri){
             var playerData = {
                 emotion: emotion,
                 likely: likely,
+                img: data_uri,
                 status: 'picture_taken'
             }
             playerRef.update(playerData);
@@ -208,6 +213,19 @@ function displayPlayerImage(data_uri, emotion, likely){
     emo.text("You are " + emotion + " (" + likely +")");
     $("#playerImage").append(img);
     $("#playerImage").append(emo);
+}
+
+function displayOpponentImage(data_uri, emotion, likely){
+    $("#opponentImage").empty();
+    var img = $("<img>");
+    img.attr({
+        src: data_uri,
+        class: 'img-fluid gameImages'
+    });
+    var emo = $("<p>");
+    emo.text("You are " + emotion + " (" + likely +")");
+    $("#opponentImage").append(img);
+    $("#opponentImage").append(emo);
 }
 
 function compareFace(playerChoice, opponentChoice){
