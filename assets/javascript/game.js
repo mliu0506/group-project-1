@@ -17,6 +17,8 @@ var totalWin;
 var totalLose;
 var totalGames;
 
+console.log("GameID: " + gameID);
+console.log("userKey: " + userKey);
 //Firebase Listeners
 //Listen value to grab total score count
 usersRef.child(userKey).on('value', function(snapScore){
