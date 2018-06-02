@@ -23,6 +23,7 @@ $(function(){
     var timer;
 
     var gameID = getCookie("gameID");
+    console.log("gameJS Cookie: " + gameID);
     /*tempRef.on('value', function(snapshot){
         var gameID = snapshot.val().gameID;
         console.log("gameID: "+ gameID);
