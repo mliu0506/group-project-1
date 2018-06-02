@@ -24,6 +24,7 @@ $(function(){
 
     tempRef.on('value', function(snapshot){
         var gameID = snapshot.val().gameID;
+        console.log("gameID: "+ gameID);
     });
     //Firebase Listeners
     //Listen value to grab total score count
