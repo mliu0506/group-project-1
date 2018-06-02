@@ -106,7 +106,12 @@ $(function(){
             //TODO display score and update game status//
         }
         displayPlayerScores();
-        $("#playerName").text(playerSnap.val().player1.name);
+        if (userKey == gameID){
+            $("#playerName").text(playerSnap.val().player1.name);
+        }
+        else{
+            $("#playerName").text(playerSnap.val().player2.name);
+        }
         /*if (isplayer2){
             //Display player1 score in opponent zone
             $("#opponentWin").text(snapScore.val().player1.win);
