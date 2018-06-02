@@ -22,7 +22,9 @@ $(function(){
     var intervalID;
     var timer;
 
-    var gameID = getCookie("gameID");
+    tempRef.on('value', function(snapshot){
+        var gameID = snapshot.val().gameID;
+    });
     //Firebase Listeners
     //Listen value to grab total score count
     usersRef.child(userKey).on('value', function(snapScore){
