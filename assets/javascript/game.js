@@ -105,7 +105,7 @@ $(function(){
             //TODO display score and update game status//
         }
         displayPlayerScores();
-        if (isplayer2){
+        /*if (isplayer2){
             //Display player1 score in opponent zone
             $("#opponentWin").text(snapScore.val().player1.win);
             $("#opponentLose").text(snapScore.val().player1.lose);
@@ -114,7 +114,7 @@ $(function(){
             //Display player2 score in opponent zone
             $("#opponentWin").text(snapScore.val().player2.win);
             $("#opponentLose").text(snapScore.val().player2.lose);
-        }
+        }*/
     });
 
     //Listen event for local chat messages
