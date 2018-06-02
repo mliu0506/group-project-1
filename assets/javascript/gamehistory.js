@@ -23,7 +23,7 @@ historyRef.child("TestPicture").once("value",function(childSnapshot) {
     var choice = "happy";
     var d = new Date();
     var timestamp = d.toUTCString();
-    if((gamephoto !== "")&&((userKey !== "")||(userKey!==null))) {
+    if((userKey !== "")||(userKey!==null)) {
         historyRef.push({uID:userKey,name:name,gamephoto:gamephoto,result:result,choice:choice,timestamp:timestamp});
     }
   }
