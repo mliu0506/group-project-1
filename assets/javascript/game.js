@@ -11,6 +11,7 @@ $(function(){
     var camOn = false;
     var playerRef;
     var opponentRef;
+    var imgData;
     //Variables for local game score
     var winScore;
     var loseScore;
@@ -45,6 +46,8 @@ $(function(){
                 playerRef = gamesRef.child(gameID).child("players").child("player1");
                 opponentRef = gamesRef.child(gameID).child("players").child("player2");
                 $("#opponentName").text(snapshot.val().players.player2.name);
+                $("#opponentWin").text(snapshot.val().players.player2.win);
+                $("#opponentLose").text(snapshot.val().players.player2.lose);
                 winScore = snapshot.val().players.player1.win;
                 loseScore = snapshot.val().players.player1.lose;
             }
@@ -53,6 +56,8 @@ $(function(){
                 playerRef = gamesRef.child(gameID).child("players").child("player2");
                 opponentRef = gamesRef.child(gameID).child("players").child("player1");
                 $("#opponentName").text(snapshot.val().players.player1.name);
+                $("#opponentWin").text(snapshot.val().players.player1.win);
+                $("#opponentLose").text(snapshot.val().players.player1.lose);
                 winScore = snapshot.val().players.player2.win;
                 loseScore = snapshot.val().players.player2.lose;
             }
@@ -61,6 +66,17 @@ $(function(){
             });
             console.log("starting Game")
             startRPS();
+        }
+        else if (snapshot.val().status == 'game_result'){
+            //Display opponent scores:
+            if (isPlayer2){
+                $("#opponentWin").text(snapshot.val().players.player1.win);
+                $("#opponentLose").text(snapshot.val().players.player1.lose);
+            }
+            else{
+                $("#opponentWin").text(snapshot.val().players.player2.win);
+                $("#opponentLose").text(snapshot.val().players.player2.lose);
+            }
         }
         else if(!(snapshot.child('players').child('player2').exists())){
             //No player 2 or player 2 left
@@ -85,10 +101,14 @@ $(function(){
         if (playerSnap.val().player1.status == 'picture_taken' && playerSnap.val().player2.status == 'picture_taken'){
             playerRef.update({status: 'game_complete'});
             if (isPlayer2){
+                var choice = playerSnap.val().player2.emotion;
+                var name = playerSnap.val().player2.name;
                 var result = compareFace(playerSnap.val().player2.emotion, playerSnap.val().player1.emotion);
                 displayOpponentImage(playerSnap.val().player1.img, playerSnap.val().player1.emotion, playerSnap.val().player1.likely);
             }
             else{
+                var choice = playerSnap.val().player1.emotion;
+                var name = playerSnap.val().player1.name;
                 var result = compareFace(playerSnap.val().player1.emotion, playerSnap.val().player2.emotion);
                 displayOpponentImage(playerSnap.val().player2.img, playerSnap.val().player2.emotion, playerSnap.val().player2.likely);
             }
@@ -97,31 +117,39 @@ $(function(){
                 case 'win':
                     playerRef.update({win: winScore++});
                     usersRef.child(userKey).update({totwin: totalWin++})
+                    $("#playerImage").html("<p>You Win!</P>");
+                    $("#opponentImage").html("<p>You Lost!</P>")
                     break;
                 case 'lose':
                     playerRef.update({lose: loseScore++});
                     usersRef.child(userKey).update({totlose: totalLose++})
+                    $("#playerImage").html("<p>You Lost!</P>");
+                    $("#opponentImage").html("<p>You Win!</P>")
             }
             usersRef.child(userKey).update({totgames: totalGames++})
-            //TODO display score and update game status//
+            gamesRef.child(gameID).update({status:'game_result'});
+
+            //update in history
+            var d = new Date();
+            var timestamp = d.toUTCString();
+            historyRef.push({
+                uID:userKey,
+                name:name,
+                gamephoto:imgData,
+                result:result,
+                choice:choice,
+                timestamp:timestamp
+            });
         }
-        displayPlayerScores();
+        
+        //Display player name
         if (userKey == gameID){
             $("#playerName").text(playerSnap.val().player1.name);
         }
         else{
             $("#playerName").text(playerSnap.val().player2.name);
         }
-        /*if (isplayer2){
-            //Display player1 score in opponent zone
-            $("#opponentWin").text(snapScore.val().player1.win);
-            $("#opponentLose").text(snapScore.val().player1.lose);
-        }
-        else{
-            //Display player2 score in opponent zone
-            $("#opponentWin").text(snapScore.val().player2.win);
-            $("#opponentLose").text(snapScore.val().player2.lose);
-        }*/
+        displayPlayerScores();
     });
 
     //Listen event for local chat messages
@@ -202,7 +230,7 @@ $(function(){
                 console.log("Take Picture Again");
             }
             else{
-
+                imgData = data_uri;
                 //Face++ detected a face, start analying emotions
                 var emotions = response.faces[0].attributes.emotion;
                 var emotionValue = Math.max(emotions.happiness,emotions.surprise,emotions.neutral);
@@ -220,7 +248,7 @@ $(function(){
                         break;
                     case emotions.neutral:
                         emotion = "Neutral";
-                    // console.log("you are neutral");
+                        //console.log("you are neutral");
                 }
                 var playerData = {
                     emotion: emotion,
@@ -342,12 +370,5 @@ $(function(){
         else{
             //Remove entire game from play
         }
-    });
-
-    $("#camTest").on("click", function(){
-        $("#playerImage").empty();
-        $("#my_camera").css({display: "block"});
-        console.log("cam active");
-        startRPS();
     });
 });
