@@ -88,10 +88,10 @@ function startGame() {
     if (userKey !== "") {
     //Reset the Game button
     gamesRef.child(userKey).once('value', function(childSnapshot) {
-      var status = childSnapshot.val().status;
+      var gameStatus = childSnapshot.val().status;
     });
-    console.log("Check Game status : " + status);
-    if (status==="pending") {
+    console.log("Check Game status : " + gameStatus);
+    if (gameStatus == "pending") {
       $(".delete-game").show();
       $(".create-game").hide();
     } else {
