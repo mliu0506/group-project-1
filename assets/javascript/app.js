@@ -35,7 +35,7 @@ function onSignIn(googleUser) {
   photo = profile.getImageUrl();
   name = profile.getName();
   userKey = ID;
-  usersRef.child(userKey).update({uID:ID,name,name,photo:photo,email:email,status:"online",lastdisconnect:"",totgames:"",totwin:"",totlose:""});
+  usersRef.child(userKey).update({uID:ID,name,name,photo:photo,email:email,status:"online",lastdisconnect:""});
   console.log("Sign-in User key :" + userKey);
   $(".user-photo").html("<img class='rounded-circle' src="+ photo +" alt='avatar' />");
   $(".chat-with").text(name);
