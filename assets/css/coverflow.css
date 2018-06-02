@@ -266,6 +266,15 @@ body {
 
 }
 
+.histborderBack
+{
+  border: 3px solid white;
+  background-color:rgba(0,0,0,0.4);
+	z-index:99;
+	margin-top: 40vh;
+
+}
+
 
 /*BUTTON*/
 .button {
