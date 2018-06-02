@@ -147,18 +147,17 @@ $(function(){
     function startRPS(){
         //Start game
         $("#playerImage").empty();
-        timer = 5;
+        timer = 6;
+        clearInterval(intervalID);
         intervalID = setInterval(countdown, 1000);
-        timeDelay();
+        setTimeout(take_snapshot, 5000);
     }
     function countdown(){
         timer--;
         $("#playerImage").text(timer);
-    }
-
-    function timeDelay(){
-        //TEMP Function to delay taking a picture
-        setTimeout(take_snapshot, 5000);
+        if (timer <= 0 ){
+            clearInterval(intervalID);
+        }
     }
 
     function take_snapshot(){
@@ -228,7 +227,7 @@ $(function(){
                     img: data_uri,
                     status: 'picture_taken'
                 }
-                //playerRef.update(playerData);
+                playerRef.update(playerData);
                 displayPlayerImage(data_uri, emotion, likely);
 
                 //DEBUG LOG
