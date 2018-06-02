@@ -29,6 +29,10 @@ var name = "";
 //Goggle Sign In function
 function onSignIn(googleUser) {
   var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   var ID = profile.getId();
   var email = profile.getEmail();
   //store the userID, photo URL & Name in the global variable
@@ -212,11 +216,10 @@ function renderChatRoomHeader() {
 
   function createGameRoom() {
     $(".create-game").on("click",function(){
-
       gameID = userKey;
       var d = new Date();
       var timestamp = d.toUTCString();
-      console.log("Create Game : "+gameID);
+      console.log("Create Game : "+ gameID);
       if(gameID !== ""){
         gamesRef.child(gameID).update({status:'pending',name:name,photo:photo,timestamp:timestamp});
         gamesRef.child(gameID).child("players").child("player1").update({uID:userKey,win:0,lose:0,name:name,status:'pending_player2'});
