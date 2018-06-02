@@ -22,9 +22,6 @@ $(function(){
     var intervalID;
     var timer;
 
-
-    console.log("GameID: " + gameID);
-    console.log("userKey: " + userKey);
     //Firebase Listeners
     //Listen value to grab total score count
     usersRef.child(userKey).on('value', function(snapScore){
@@ -59,6 +56,7 @@ $(function(){
             gamesRef.child(gameID).update({
                 status:'game_running'
             });
+            console.log("starting Game")
             startRPS();
         }
         else if(!(snapshot.child('players').child('player2').exists())){
@@ -337,11 +335,11 @@ $(function(){
             //Remove entire game from play
         }
     });
-});
 
-$("#camTest").on("click", function(){
-    $("#playerImage").empty();
-    $("#my_camera").css({display: "block"});
-    console.log("cam active");
-    startRPS();
+    $("#camTest").on("click", function(){
+        $("#playerImage").empty();
+        $("#my_camera").css({display: "block"});
+        console.log("cam active");
+        startRPS();
+    });
 });
