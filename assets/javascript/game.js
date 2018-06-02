@@ -22,10 +22,11 @@ $(function(){
     var intervalID;
     var timer;
 
-    tempRef.on('value', function(snapshot){
+    var gameID = getCookie("gameID");
+    /*tempRef.on('value', function(snapshot){
         var gameID = snapshot.val().gameID;
         console.log("gameID: "+ gameID);
-    });
+    });*/
     //Firebase Listeners
     //Listen value to grab total score count
     usersRef.child(userKey).on('value', function(snapScore){
