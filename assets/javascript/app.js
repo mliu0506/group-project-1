@@ -87,6 +87,7 @@ function startGame() {
     
     if (userKey !== "") {
     //Reset the Game button
+    console.log("checkIfGameExists : " + checkIfGameExists(userKey));
     if (checkIfGameExists(userKey)) {
       $(".delete-game").show();
       $(".create-game").hide();
