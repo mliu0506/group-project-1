@@ -124,13 +124,14 @@ function startGame() {
 function checkIfGameExists(userId) {
   gamesRef.child(userId).once('value', function(childSnapshot) {
     var status = childSnapshot.val().status;
+  });
     console.log("Game exist :"+ userId +" value :" + status);
     if (status === "pending") {
       return "true";
     } else {
       return "false";
     } 
-  });
+
 }
 
 function renderChatRoomHeader() {
