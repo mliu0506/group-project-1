@@ -24,10 +24,7 @@ $(function(){
 
     var gameID = getCookie("gameID");
     console.log("gameJS Cookie: " + gameID);
-    /*tempRef.on('value', function(snapshot){
-        var gameID = snapshot.val().gameID;
-        console.log("gameID: "+ gameID);
-    });*/
+
     //Firebase Listeners
     //Listen value to grab total score count
     usersRef.child(userKey).on('value', function(snapScore){
@@ -44,7 +41,7 @@ $(function(){
             camOn = true;
 
             //Check if user is game room creator, assign reference to user path
-            if (snapshot.val().players.player1.uID == gameID){
+            if (userKey == gameID){
                 playerRef = gamesRef.child(gameID).child("players").child("player1");
                 opponentRef = gamesRef.child(gameID).child("players").child("player2");
                 $("#opponentName").text(snapshot.val().players.player2.name);
