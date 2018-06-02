@@ -13,8 +13,8 @@
           console.log("Game Name:" + child.val().name);
           console.log("Game Status:" + child.val().status);
           if (status ==="pending") {
-            $(".gameroom").append("<BR><div class='chat'><div class='chat-header clearfix'><img class='rounded-circle' src="+ photo +" alt='avatar' /><div class='chat-about'><div class='chat-with'> Game created by " + name + "</div><span class='message-data-time'>" + timestamp + "</span></div><button class='join-game' data-value='"+ gameID + "'>Join Game</button><i class='fa fa-star'></i></div></div>");
-            $(".gameroom").append("<BR>");
+            $(".gameroom").append("<div class='chat'><div class='chat-header clearfix'><img class='rounded-circle' src="+ photo +" alt='avatar' /><div class='chat-about'><div class='chat-with'> Game created by " + name + "</div><span class='message-data-time'>" + timestamp + "</span></div><button class='join-game' data-value='"+ gameID + "'>Join Game</button><i class='fa fa-star'></i></div></div>");
+          //  $(".gameroom").append("<BR>");
           }
        // }
       });
