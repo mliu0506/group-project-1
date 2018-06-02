@@ -88,7 +88,7 @@ function startGame() {
     if (userKey !== "") {
     //Reset the Game button
     console.log("checkIfGameExists : " + checkIfGameExists(userKey));
-    if (checkIfGameExists(userKey)) {
+    if (checkIfGameExists(userKey)==="true") {
       $(".delete-game").show();
       $(".create-game").hide();
     } else {
@@ -126,9 +126,9 @@ function checkIfGameExists(userId) {
     var status = childSnapshot.val().status;
     console.log("Game exist :"+ userId +" value :" + status);
     if (status === "pending") {
-      return true;
+      return "true";
     } else {
-      return false;
+      return "false";
     } 
   });
 }
