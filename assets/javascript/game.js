@@ -56,9 +56,9 @@ $(function(){
                 winScore = snapshot.val().players.player2.win;
                 loseScore = snapshot.val().players.player2.lose;
             }
-            /*gamesRef.child(gameID).update({
+            gamesRef.child(gameID).update({
                 status:'game_running'
-            });*/
+            });
             console.log("starting Game")
             startRPS();
         }
@@ -202,6 +202,7 @@ $(function(){
                 console.log("Take Picture Again");
             }
             else{
+
                 //Face++ detected a face, start analying emotions
                 var emotions = response.faces[0].attributes.emotion;
                 var emotionValue = Math.max(emotions.happiness,emotions.surprise,emotions.neutral);
