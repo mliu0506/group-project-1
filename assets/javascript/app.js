@@ -86,7 +86,7 @@ function startGame() {
           name = childSnapshot.val().name;
         });
         userKey = cookieKey;
-        gameID = userKey;
+        //gameID = userKey;
       }
     }
     
