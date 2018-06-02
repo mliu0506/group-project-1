@@ -9,10 +9,22 @@ var isplayer2 = false;
 var camOn = false;
 var playerRef;
 var opponentRef;
+//Variables for local game score
 var winScore;
 var loseScore;
+//Variables for total scores
+var totalWin;
+var totalLose;
+var totalGames;
 
-//Disabled firebase listener for testing
+//Firebase Listeners
+//Listen value to grab total score count
+usersRef.child(userKey).on('value', function(snapScore){
+    totalWin = snapScore.val().totwin;
+    totalLose = snapScore.val().totlose;
+    totalGames = snapScore.val().totgames;
+});
+
 //Listen event for game status
 gamesRef.child(gameID).on('value', function(snapshot){
     if (snapshot.val().status == "matched"){
@@ -75,10 +87,13 @@ gamesRef.child(gameID).child('players').on('value', function(playerSnap){
         switch (result){
             case 'win':
                 playerRef.update({win: winScore++});
+                usersRef.child(userKey).update({totwin: totalWin++})
                 break;
             case 'lose':
                 playerRef.update({lose: loseScore++});
+                usersRef.child(userKey).update({totlose: totalLose++})
         }
+        usersRef.child(userKey).update({totgames: totalGames++})
 
         //TODO display score and update game status//
     }
@@ -98,6 +113,7 @@ gamesRef.child(gameID).child('chat').on('child_added', function(chatsnapshot){
     messageList.scrollTop(messageList[0].scrollHeight);
 });
 
+//FUNCTIONS
 function startRPS(){
     //Start game
     //TODO start intervals and webcam functions
@@ -174,7 +190,7 @@ function detectFace(data_uri){
                 img: data_uri,
                 status: 'picture_taken'
             }
-            playerRef.update(playerData);
+            //playerRef.update(playerData);
             displayPlayerImage(data_uri, emotion, likely);
 
             //DEBUG LOG
