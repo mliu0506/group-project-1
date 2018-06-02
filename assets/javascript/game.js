@@ -7,7 +7,7 @@ $(function(){
 
     //GamePage Global Variables
     var messageList = $("#messageList"); //Variable for local chat messages
-    var isplayer2 = false;
+    var isPlayer2 = false;
     var camOn = false;
     var playerRef;
     var opponentRef;
@@ -22,6 +22,7 @@ $(function(){
     var intervalID;
     var timer;
 
+    var gameID = getCookie("gameID");
     //Firebase Listeners
     //Listen value to grab total score count
     usersRef.child(userKey).on('value', function(snapScore){
@@ -46,7 +47,7 @@ $(function(){
                 loseScore = snapshot.val().players.player1.lose;
             }
             else{
-                isplayer2 = true;
+                isPlayer2 = true;
                 playerRef = gamesRef.child(gameID).child("players").child("player2");
                 opponentRef = gamesRef.child(gameID).child("players").child("player1");
                 $("#opponentName").text(snapshot.val().players.player1.name);
@@ -81,7 +82,7 @@ $(function(){
     gamesRef.child(gameID).child('players').on('value', function(playerSnap){
         if (playerSnap.val().player1.status == 'picture_taken' && playerSnap.val().player2.status == 'picture_taken'){
             playerRef.update({status: 'game_complete'});
-            if (isplayer2){
+            if (isPlayer2){
                 var result = compareFace(playerSnap.val().player2.emotion, playerSnap.val().player1.emotion);
                 displayOpponentImage(playerSnap.val().player1.img, playerSnap.val().player1.emotion, playerSnap.val().player1.likely);
             }
