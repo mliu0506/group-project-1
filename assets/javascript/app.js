@@ -220,6 +220,7 @@ function renderChatRoomHeader() {
   function createGameRoom() {
     $(".create-game").on("click",function(){
       gameID = userKey;
+      setCookie("gameID", gameID, 30); //save the uID into the cookie
       var d = new Date();
       var timestamp = d.toUTCString();
       console.log("Create Game : "+ gameID);
