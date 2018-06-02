@@ -18,6 +18,7 @@ var chatRef = database.ref('chats');
 var usersRef = database.ref('users/');
 var gamesRef = database.ref('games/');
 var historyRef = database.ref('history/');
+var tempRef = database.ref('temp/');
 
 // Global variable
 var gameID = "";
@@ -220,7 +221,7 @@ function renderChatRoomHeader() {
   function createGameRoom() {
     $(".create-game").on("click",function(){
       gameID = userKey;
-      setCookie("gameID", gameID, 30); //save the uID into the cookie
+      tempRef.update({gameID:gameID});
       var d = new Date();
       var timestamp = d.toUTCString();
       console.log("Create Game : "+ gameID);
