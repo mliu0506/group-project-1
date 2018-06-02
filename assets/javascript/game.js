@@ -5,24 +5,78 @@
 
 //GamePage Global Variables
 var messageList = $("#messageList"); //Variable for local chat messages
+var isplayer2 = false;
+var camOn = false;
+var playerRef;
+var opponentRef;
+var winScore;
+var loseScore;
 
-/* Disabled firebase listener for testing
-//TODO FIREBASE LISTENER HERE
-//TODO fix path listener
+//Disabled firebase listener for testing
+//Listen event for game status
 gamesRef.child(gameID).on('value', function(snapshot){
-    //Detect if P1 and P2 exists
-    //NOTE: Change gameRoom so when P2 Joins change state of game to JOINED, Then check here
-    if (snapshot.val().state === "JOINED"){
-        console.log("hi hi");
-        //Start game routine
-    }
-    //Change so to detect player 2 slot open
-    else if(!(snapshot.child(gameID).child('players').child('p2').exists())){
-        console.log(snapshot.val());
-        console.log("nothing here");
+    if (snapshot.val().status == "matched"){
+        //Active and attach camera to DOM element
+        Webcam.attach('#my_camera');
+        camOn = true;
+
+        //Check if user is game room creator, assign reference to user path
+        if (snapshot.val().players.player1.uID == gameID){
+            playerRef = gamesRef.child(gameID).child("players").child("player1");
+            opponentRef = gamesRef.child(gameID).child("players").child("player2");
+            $("#opponentName").text(snapshot.val().players.player2.name);
+            winScore = snapshot.val().players.player1.win;
+            loseScore = snapshot.val().players.player1.lose;
+        }
+        else{
+            isplayer2 = true;
+            playerRef = gamesRef.child(gameID).child("players").child("player2");
+            opponentRef = gamesRef.child(gameID).child("players").child("player1");
+            $("#opponentName").text(snapshot.val().players.player1.name);
+            winScore = snapshot.val().players.player2.win;
+            loseScore = snapshot.val().players.player2.lose;
+        }
         gamesRef.child(gameID).update({
-            state: "OPEN"
+            status:'game_running'
         });
+        startRPS();
+    }
+    else if(!(snapshot.child('players').child('player2').exists())){
+        //No player 2 or player 2 left
+        if(camOn){
+            //Turns off Camera
+            Webcam.reset();
+        }
+        $("#opponentName").text("Waiting for player 2");
+        gamesRef.child(gameID).update({
+            status:'pending'
+        });
+    }
+    else if(snapshot == null){
+        //Game got removed
+        // TODO //
+        //window.location.assign("index.html");
+    }
+});
+
+//Listen event for players status
+gamesRef.child(gameID).child('players').on('value', function(playerSnap){
+    if (playerSnap.val().player1.status == 'picture_taken' && playerSnap.val().player2.status == 'picture_taken'){
+        playerRef.update({status: 'game_complete'});
+        if (isplayer2){
+            var result = compareFace(playerSnap.val().player2.emotion, playerSnap.val().player1.emotion);
+        }
+        else{
+            var result = compareFace(playerSnap.val().player1.emotion, playerSnap.val().player2.emotion);
+        }
+        //update scores
+        switch (result){
+            case 'win':
+                playerRef.update({win: winScore++});
+                break;
+            case 'lose':
+                playerRef.update({lose: loseScore++});
+        }
     }
 });
 
@@ -39,9 +93,11 @@ gamesRef.child(gameID).child('chat').on('child_added', function(chatsnapshot){
     //auto scroll to bottom of textarea, show latest chat
     messageList.scrollTop(messageList[0].scrollHeight);
 });
-*/
-//Active and attach camera to DOM element
-Webcam.attach('#my_camera');
+
+function startRPS(){
+    //Start game
+    //TODO start intervals and webcam functions
+}
 
 function timeDelay(){
     //TEMP Function to delay taking a picture
@@ -55,8 +111,6 @@ function take_snapshot(){
         detectFace(data_uri);
         console.log("picture taken");
     });
-    //Turns off Camera
-    //Webcam.reset();
 }
 
 function detectFace(data_uri){
@@ -110,13 +164,13 @@ function detectFace(data_uri){
                     emotion = "Neutral";
                    // console.log("you are neutral");
             }
-            //TODO SEND TO FIREBASE update player data
             var playerData = {
                 emotion: emotion,
-                likely: likely
+                likely: likely,
+                status: 'picture_taken'
             }
-            //FirebasePath.update(playerData);
-            displayPlayerImage(data_uri);
+            playerRef.update(playerData);
+            displayPlayerImage(data_uri, emotion, likely);
 
             //DEBUG LOG
             /*console.log("face detected");
@@ -141,19 +195,21 @@ function likelyEmotion(value){
     }
 }
 
-function displayPlayerImage(data_uri){
+function displayPlayerImage(data_uri, emotion, likely){
     //Function to display player image in the image section
     $("#playerImage").empty();
     $("#my_camera").css({display: 'none'});
     var img = $("<img>");
     img.attr({
         src: data_uri,
-        class: 'img-fluid'
+        class: 'img-fluid gameImages'
     });
+    var emo = $("<p>");
+    emo.text("You are " + emotion + " (" + likely +")");
     $("#playerImage").append(img);
+    $("#playerImage").append(emo);
 }
 
-/*TODO RPS LOGIC HERE AND UPDATE FIREBASE*/
 function compareFace(playerChoice, opponentChoice){
     //Function to compare player's choice with opponent's choice, return string: win, lose or draw
     //RPS logic: Happy > Neutral, Neutral > Suprise, Suprise > Happy
@@ -191,13 +247,16 @@ function sendChatMessage(message){
     //Function to send local game messages to database
     var ref = gamesRef.child(gameID).child('chat');
     ref.push().set({
-        playerName: playerName,
+        playerName: name,
         message: message
     });
 }
 
 //Shorthand for $(document).ready(function(){...});
 $(function(){
+    //Setup player name on board
+    $("#playerName").text(name);
+
     //Click event for local message field submit
     $("#submitMessage").on("click", function(event){
         event.preventDefault();
@@ -206,9 +265,21 @@ $(function(){
         //Clear chat fields
         $("#message").val("");
     });
+
+    //TODO//
+    //Click event for leaving game
+    $("#leaveGame").on("click", function(){
+        if(isplayer2){
+            playerRef.remove();
+        }
+        else{
+            //Remove entire game from play
+        }
+    });
 });
 
-$("#leaveGame").on("click", function(){
+$("#camTest").on("click", function(){
+    $("#playerImage").empty();
     $("#my_camera").css({display: "block"});
     console.log("left the game");
 });
