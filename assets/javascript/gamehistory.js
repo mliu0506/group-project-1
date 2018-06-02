@@ -3,7 +3,16 @@ function renderHistory() {
 historyRef.child("TestPicture").once("value",function(childSnapshot) {  
     var gamephoto = childSnapshot.val().img;
     $('.slider').prepend("<div class='slide'><img src='"+ gamephoto + "' /><p> testing picture </p></div>");       
-    });
+    var name = "Michael Liu";
+    var userID = "108155336031129825356";
+    var result = "win";
+    var choice = "happy";
+    var d = new Date();
+    var timestamp = d.toUTCString();
+    if((userKey !== "")||(userKey!==null)) {
+        historyRef.push({uID:userKey,name:name,gamephoto:gamephoto,result:result,choice:choice,timestamp:timestamp});
+    }    
+});
     
     // when ever the user DB value is being update, the following function will be trigger
     //historyRef.on("child_added",function(childSnapshot){
@@ -16,17 +25,7 @@ historyRef.child("TestPicture").once("value",function(childSnapshot) {
     //    $('.slider').append("<div class='slide'><img src='"+ gamephoto + "' /><p>" + username +" : " + result + " : " + choice + "</p></div>");       
     //});
 
-    var gamephoto = "";
-    var username = "Michael Liu";
-    var userID = "108155336031129825356";
-    var result = "win";
-    var choice = "happy";
-    var d = new Date();
-    var timestamp = d.toUTCString();
-    if((userKey !== "")||(userKey!==null)) {
-        historyRef.push({uID:userKey,name:name,gamephoto:gamephoto,result:result,choice:choice,timestamp:timestamp});
-    }
-  }
+}
 
 
 function renderProfile() {
