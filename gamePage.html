@@ -68,17 +68,30 @@
                 <!--Player Area-->
                 <div class="col-5 col-md-4 p-0">
                     <section id="playerZone" class="gameBox">
-                        Player Zone
-                        <div id="my_camera"></div>
-                        <div id="playerImage" class="imageBox"></div>
-                        <a href="javascript:void(take_snapshot())">Take Snapshot</a>
+                        <h3 id="playerName">Player Zone</h3>
+                        <div class="imageBox">
+                            <div id="my_camera"></div> <!--Webcam attach here-->
+                            <div id="playerImage"></div>
+                        </div>
+                        <div id="playerScore">
+                            <p>Win</p>
+                            <p>Lose</p>
+                            <p>Draw</p>
+                        </div>
                     </section>
                 </div>
                 <!--Opponent Area-->
                 <div class="col-5 col-md-4 p-0">
                     <section id="opponentZone" class="gameBox">
-                        Opponent Zone
-                        <div id="opponentImage" class="imageBox"></div>
+                        <h3 id="opponentName">Opponent Zone</h3>
+                        <div class="imageBox">
+                            <div id="opponentImage"></div>
+                        </div>
+                        <div id="opponentScore">
+                            <p>Win</p>
+                            <p>Lose</p>
+                            <p>Draw</p>
+                        </div>
                     </section>
                 </div>
                 <!--Message board-->
@@ -98,8 +111,12 @@
             </div>
         </section>
 
+        <a href="index.html">
+            <button id="leaveGame" class="btn btn-primary">Leave Game</button>
+        </a>
         <!--TEMP HTML-->
-        <button id="leaveGame" class="btn btn-primary">Leave Game</button>
+        <button id="camTest" class="btn btn-primary">Test Cam</button>
+        <a href="javascript:void(take_snapshot())">Take Snapshot</a>
 
         <!--SCRIPTS-->
         <!--  Bootstrap 4 JavaScript -->
