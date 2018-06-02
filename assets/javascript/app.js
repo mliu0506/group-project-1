@@ -223,6 +223,7 @@ function renderChatRoomHeader() {
       gameID = userKey;
       //tempRef.update({gameID:gameID});
       setCookie("gameID", gameID, 30); //save the uID into the cookie
+      var d = new Date();
       var timestamp = d.toUTCString();
       console.log("Create Game : "+ gameID);
       if(gameID !== ""){
