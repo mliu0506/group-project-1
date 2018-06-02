@@ -89,15 +89,16 @@ function startGame() {
     //Reset the Game button
     gamesRef.child(userKey).once('value', function(childSnapshot) {
       var gameStatus = childSnapshot.val().status;
+      console.log("Check Game status : " + gameStatus);
+      if (gameStatus == "pending") {
+        $(".delete-game").show();
+        $(".create-game").hide();
+      } else {
+        $(".create-game").show();
+        $(".delete-game").hide();
+      }
     });
-    console.log("Check Game status : " + gameStatus);
-    if (gameStatus == "pending") {
-      $(".delete-game").show();
-      $(".create-game").hide();
-    } else {
-      $(".create-game").show();
-      $(".delete-game").hide();
-    }
+
     //Refresh the message
     chatRef.once("value",function(childSnapshot){
       var message = childSnapshot.val().message;
