@@ -24,7 +24,8 @@
 
 function joinGame() {
   $(".gameroom").on("click",".join-game",function(){
-    window.open("gamePage.html", '_blank');
+    //window.open("gamePage.html", '_blank');  //open a new  window
+    document.location.href = "gamePage.html";   //open the same window
     var gameID = $(".join-game").attr("data-value");
     var d = new Date();
     var timestamp = d.toUTCString();
