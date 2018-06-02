@@ -10,7 +10,6 @@ $(function(){
     var isPlayer2 = false;
     var camOn = false;
     var playerRef;
-    var opponentRef;
     var imgData;
     //Variables for local game score
     var winScore;
@@ -19,7 +18,7 @@ $(function(){
     var totalWin;
     var totalLose;
     var totalGames;
-
+    //Variables for countdown timer
     var intervalID;
     var timer;
 
@@ -27,7 +26,7 @@ $(function(){
     console.log("gameJS Cookie: " + gameID);
 
     //Firebase Listeners
-    //Listen value to grab total score count
+    //Listen value to grab overall score
     usersRef.child(userKey).on('value', function(snapScore){
         totalWin = snapScore.val().totwin;
         totalLose = snapScore.val().totlose;
@@ -44,7 +43,6 @@ $(function(){
             //Check if user is game room creator, assign reference to user path
             if (userKey == gameID){
                 playerRef = gamesRef.child(gameID).child("players").child("player1");
-                opponentRef = gamesRef.child(gameID).child("players").child("player2");
                 $("#opponentName").text(snapshot.val().players.player2.name);
                 $("#opponentWin").text(snapshot.val().players.player2.win);
                 $("#opponentLose").text(snapshot.val().players.player2.lose);
@@ -54,7 +52,6 @@ $(function(){
             else{
                 isPlayer2 = true;
                 playerRef = gamesRef.child(gameID).child("players").child("player2");
-                opponentRef = gamesRef.child(gameID).child("players").child("player1");
                 $("#opponentName").text(snapshot.val().players.player1.name);
                 $("#opponentWin").text(snapshot.val().players.player1.win);
                 $("#opponentLose").text(snapshot.val().players.player1.lose);
@@ -77,6 +74,10 @@ $(function(){
                 $("#opponentWin").text(snapshot.val().players.player2.win);
                 $("#opponentLose").text(snapshot.val().players.player2.lose);
             }
+            gamesRef.child(gameID).update({
+                status:'game_running'
+            });
+            setTimeout(startRPS, 5000);
         }
         else if(!(snapshot.child('players').child('player2').exists())){
             //No player 2 or player 2 left
@@ -84,7 +85,14 @@ $(function(){
                 //Turns off Camera
                 Webcam.reset();
             }
+            clearInterval(intervalID); //Stops timer in case it was running
+            //Clear player side of field
+            $("#playerImage").empty();
+            //Clear opponent side of field
             $("#opponentName").text("Waiting for player 2");
+            $("#opponentImage").empty();
+            $("#opponentWin").empty();
+            $("#opponentLose").empty();
             gamesRef.child(gameID).update({
                 status:'pending'
             });
@@ -175,7 +183,8 @@ $(function(){
     function startRPS(){
         //Start game
         $("#playerImage").empty();
-        timer = 6;
+        $("#opponentImage").empty();
+        timer = 5;
         clearInterval(intervalID);
         intervalID = setInterval(countdown, 1000);
         setTimeout(take_snapshot, 5000);
@@ -364,11 +373,13 @@ $(function(){
     //TODO//
     //Click event for leaving game
     $("#leaveGame").on("click", function(){
+        clearInterval(intervalID); //Stops Timer if it was running
         if(isplayer2){
             playerRef.remove();
         }
         else{
             //Remove entire game from play
+            gamesRef.child(gameID).remove();
         }
     });
 });
