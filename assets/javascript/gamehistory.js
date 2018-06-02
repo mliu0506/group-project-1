@@ -15,6 +15,17 @@ historyRef.child("TestPicture").once("value",function(childSnapshot) {
     //    var timestamp = childSnapshot.val().timestamp;
     //    $('.slider').append("<div class='slide'><img src='"+ gamephoto + "' /><p>" + username +" : " + result + " : " + choice + "</p></div>");       
     //});
+
+    var gamephoto = "";
+    var username = "Michael Liu";
+    var userID = "108155336031129825356";
+    var result = "win";
+    var choice = "happy";
+    var d = new Date();
+    var timestamp = d.toUTCString();
+    if((gamephoto !== "")&&((userKey !== "")||(userKey!==null))) {
+        historyRef.push({uID:userKey,name:name,gamephoto:gamephoto,result:result,choice:choice,timestamp:timestamp});
+    }
   }
 
 
