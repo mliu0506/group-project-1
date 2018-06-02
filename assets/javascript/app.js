@@ -212,6 +212,7 @@ function renderChatRoomHeader() {
 
   function createGameRoom() {
     $(".create-game").on("click",function(){
+      window.open("gamePage.html", '_blank');
       gameID = userKey;
       var d = new Date();
       var timestamp = d.toUTCString();
