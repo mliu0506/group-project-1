@@ -3,5 +3,7 @@
     Webcam library and Face++ API are called here
 */
 
-console.log("userKey gamePage: " + userKey);
-console.log("gameID gamePage: " + gameID);
+$(document).ready(function(){
+    console.log("userKey gamePage: " + userKey);
+    console.log("gameID gamePage: " + gameID);
+});
