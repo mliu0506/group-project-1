@@ -53,9 +53,9 @@ $(function(){
                 winScore = snapshot.val().players.player2.win;
                 loseScore = snapshot.val().players.player2.lose;
             }
-            gamesRef.child(gameID).update({
+            /*gamesRef.child(gameID).update({
                 status:'game_running'
-            });
+            });*/
             console.log("starting Game")
             startRPS();
         }
