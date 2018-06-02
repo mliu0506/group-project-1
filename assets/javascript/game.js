@@ -105,6 +105,7 @@ $(function(){
             //TODO display score and update game status//
         }
         displayPlayerScores();
+        $("#playerName").text(playerSnap.player1.name);
         /*if (isplayer2){
             //Display player1 score in opponent zone
             $("#opponentWin").text(snapScore.val().player1.win);
@@ -316,10 +317,6 @@ $(function(){
             message: message
         });
     }
-
-
-    //Setup player name on board
-    $("#playerName").text(name);
 
     //Click event for local message field submit
     $("#submitMessage").on("click", function(event){
