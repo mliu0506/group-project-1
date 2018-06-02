@@ -35,7 +35,7 @@ function joinGame() {
       $(".join-game").hide();
     }
     //window.open("gamePage.html", '_blank');  //open a new  window
-    //document.location.href = "gamePage.html";   //open the same window
+    document.location.href = "gamePage.html";   //open the same window
   });
 }
 
