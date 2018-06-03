@@ -79,7 +79,7 @@ function startGame() {
     if (userKey === "") {
      var cookieKey= getCookie("fbuID"); //get the uID from the cookie
      console.log("Cookie Key: " + cookieKey);
-     if ((cookieKey !== "") || (cookieKey !== null)) {
+     if ((cookieKey !== "") || (cookieKey !== null) || (cookieKey == undefined)) {
         //lookup the photo and the name
         usersRef.child(cookieKey).once("value",function(childSnapshot){
           //save into the Golbal variable 
