@@ -20,7 +20,7 @@ $(function(){
     //Variables for countdown timer
     var intervalID;
     var timer;
-
+    
     //Gets the GameID from cookie, workaround page refreshs
     var gameID = getCookie("gameID");
     console.log("gameJS Cookie: " + gameID);
@@ -98,8 +98,7 @@ $(function(){
         }
         else if(snapshot == null){
             //Game got removed
-            // TODO //
-            //window.location.assign("index.html");
+            document.location.href = "index.html";
         }
     });
 
@@ -176,7 +175,7 @@ $(function(){
         //auto scroll to bottom of textarea, show latest chat
         messageList.scrollTop(messageList[0].scrollHeight);
     });
-
+    
     //FUNCTIONS
     function startRPS(){
         $("#playerImage").empty();
