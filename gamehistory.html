@@ -4,9 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
    
-    <!--Google Login meta-->
-    <meta name="google-signin-client_id" content="369092792103-ekret3hb9qh5jtrdp1s0a15ql067378n.apps.googleusercontent.com">
-
     <title>Face Battles</title>
 
     <!--  Bootstrap 4 CSS -->
@@ -18,9 +15,6 @@
 
     <!--Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
-
-    <!-- Google Login-->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
     <!-- Style CSS -->
     <link rel="stylesheet" href="assets/css/elasticslider.css">
@@ -55,10 +49,11 @@
       <a href="gameroom.html" onclick="$('#menu-close').click();">Game Room</a>
     </li>
     <li>
-      <a href="chatroom.html" onclick="$('#menu-close').click();">User Logout</a>
+      <a id="signout" href="#" onclick="$('#menu-close').click();">User Logout</a>
     </li>
   </ul>
 </nav>
+
 
 <!-- Profile Page Panel with Button -->
 <section class="panel">
@@ -70,12 +65,18 @@
   </div>
 </section>
 
+
 <!-- Photo Slider-->
 <div class="slider">
     <div class="slide" ><img src="assets/images/happy1.jpg" /><p>Tracy Carpenter: Win : Happy :)</p></div>
-    <div class="slide" ><img src="assets/images/happy2.jpg" /><p>Tracy Carpenter: Win : Happy :)</p></div>
-    <div class="slide" ><img src="assets/images/happy3.jpg" /><p>Tracy Carpenter: Win : Happy :)</p></div>
-</div>
+    <div class="slide"><img src="assets/images/angry2.jpg" /><p>Vincent Porter: Lose :     Angry :{</p></div>
+    <div class="slide"><img src="assets/images/surprise1.jpg" /><p>Ginger Johnston: Win :Surprise ;></p></div>
+    <div class="slide" ><img src="assets/images/happy3.jpg" /><p>Monica Ward: Lose :  Happy :)</p></div>
+    <div class="slide" ><img src="assets/images/surprise5.jpg" /><p>Christian Kelly: Win :Surprise ;></p></div>
+    <div class="slide"><img src="assets/images/angry1.jpg" /><p>Mike Thomas: Lose: Angry :{</p></div>
+  </div>
+
+
 
 <!--  Bootstrap 4 JavaScript -->
 
@@ -95,20 +96,12 @@
 
  <script src="https://code.jquery.com/jquery.js"></script>
 
-<!-- This program java script-->
-<script src="assets/javascript/app.js"></script>
-
-<!-- This program java script-->
-<script src="assets/javascript/gamehistory.js"></script>
 
  <!-- This program java script-->
 <script src="assets/javascript/elasticslider.js"></script>
 
 <!-- This program java script-->
 <script src="assets/javascript/sidebar.js"></script>
-
-<!-- This program java script-->
-<script src="assets/javascript/cookie.js"></script>
 
 </body>
 </html>
