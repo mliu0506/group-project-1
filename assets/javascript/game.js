@@ -39,32 +39,31 @@ $(function(){
             //Active and attach camera to DOM element
             Webcam.attach('#my_camera');
             camOn = true;
-
             //Check if user is game room creator, assign reference to user path
             if (userKey == gameID){
                 playerRef = gamesRef.child(gameID).child("players").child("player1");
-                var playerSnapShot = snapshot.val().players.player1;
-                var opponentSnapShot = snapshot.val().players.player2;
+                $("#opponentName").text(snapshot.val().players.player2.name);
+                $("#opponentWin").text(snapshot.val().players.player2.win);
+                $("#opponentLose").text(snapshot.val().players.player2.lose);
+                winScore = snapshot.val().players.player1.win;
+                loseScore = snapshot.val().players.player1.lose;
             }
             else{
                 isPlayer2 = true;
                 playerRef = gamesRef.child(gameID).child("players").child("player2");
-                var playerSnapShot = snapshot.val().players.player2;
-                var opponentSnapShot = snapshot.val().players.player1;
+                $("#opponentName").text(snapshot.val().players.player1.name);
+                $("#opponentWin").text(snapshot.val().players.player1.win);
+                $("#opponentLose").text(snapshot.val().players.player1.lose);
+                winScore = snapshot.val().players.player2.win;
+                loseScore = snapshot.val().players.player2.lose;
             }
-            $("#opponentName").text(opponentSnapShot.name);
-            $("#opponentWin").text(opponentSnapShot.win);
-            $("#opponentLose").text(opponentSnapShot.lose);
-            winScore = playerSnapShot.win;
-            loseScore = playerSnapShot.lose;
-            gamesRef.child(gameID).update({
-                status:'game_running'
-            });
+            gamesRef.child(gameID).update({status:'game_running'});
             console.log("Game Start")
             startRPS();
         }
         else if (snapshot.val().status == 'game_result'){
             //Display opponent scores:
+            console.log("RESULT DISPLAY");
             if (isPlayer2){
                 $("#opponentWin").text(snapshot.val().players.player1.win);
                 $("#opponentLose").text(snapshot.val().players.player1.lose);
@@ -73,13 +72,12 @@ $(function(){
                 $("#opponentWin").text(snapshot.val().players.player2.win);
                 $("#opponentLose").text(snapshot.val().players.player2.lose);
             }
-            gamesRef.child(gameID).update({
-                status:'game_running'
-            });
+            gamesRef.child(gameID).update({status:'game_running'});
             setTimeout(startRPS, 5000);
         }
         else if(!(snapshot.child('players').child('player2').exists())){
             //No player 2 or player 2 left
+            console.log("NO PLAYER 2");
             if(camOn){
                 //Turns off Camera
                 Webcam.reset();
@@ -92,9 +90,7 @@ $(function(){
             $("#opponentImage").empty();
             $("#opponentWin").empty();
             $("#opponentLose").empty();
-            gamesRef.child(gameID).update({
-                status:'pending'
-            });
+            gamesRef.child(gameID).update({status:'pending'});
         }
         else if(snapshot == null){
             //Game got removed
@@ -109,13 +105,13 @@ $(function(){
             if (isPlayer2){
                 var choice = playerSnap.val().player2.emotion;
                 var name = playerSnap.val().player2.name;
-                var result = compareFace(playerSnap.val().player2.emotion, playerSnap.val().player1.emotion);
+                var result = compareFace(choice, playerSnap.val().player1.emotion);
                 displayOpponentImage(playerSnap.val().player1.img, playerSnap.val().player1.emotion, playerSnap.val().player1.likely);
             }
             else{
                 var choice = playerSnap.val().player1.emotion;
                 var name = playerSnap.val().player1.name;
-                var result = compareFace(playerSnap.val().player1.emotion, playerSnap.val().player2.emotion);
+                var result = compareFace(choice, playerSnap.val().player2.emotion);
                 displayOpponentImage(playerSnap.val().player2.img, playerSnap.val().player2.emotion, playerSnap.val().player2.likely);
             }
             //update scores
@@ -297,6 +293,7 @@ $(function(){
     }
 
     function displayOpponentImage(data_uri, emotion, likely){
+        //Function to display opponent image in image section
         $("#opponentImage").empty();
         var img = $("<img>");
         img.attr({
