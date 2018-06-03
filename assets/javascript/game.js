@@ -4,7 +4,6 @@
 */
 //Shorthand for $(document).ready(function(){...});
 $(function(){
-
     //GamePage Global Variables
     var messageList = $("#messageList"); //Variable for local chat messages
     var isPlayer2 = false;
@@ -22,6 +21,7 @@ $(function(){
     var intervalID;
     var timer;
 
+    //Gets the GameID from cookie, workaround page refreshs
     var gameID = getCookie("gameID");
     console.log("gameJS Cookie: " + gameID);
 
@@ -43,25 +43,24 @@ $(function(){
             //Check if user is game room creator, assign reference to user path
             if (userKey == gameID){
                 playerRef = gamesRef.child(gameID).child("players").child("player1");
-                $("#opponentName").text(snapshot.val().players.player2.name);
-                $("#opponentWin").text(snapshot.val().players.player2.win);
-                $("#opponentLose").text(snapshot.val().players.player2.lose);
-                winScore = snapshot.val().players.player1.win;
-                loseScore = snapshot.val().players.player1.lose;
+                var playerSnapShot = snapshot.val().players.player1;
+                var opponentSnapShot = snapshot.val().players.player2;
             }
             else{
                 isPlayer2 = true;
                 playerRef = gamesRef.child(gameID).child("players").child("player2");
-                $("#opponentName").text(snapshot.val().players.player1.name);
-                $("#opponentWin").text(snapshot.val().players.player1.win);
-                $("#opponentLose").text(snapshot.val().players.player1.lose);
-                winScore = snapshot.val().players.player2.win;
-                loseScore = snapshot.val().players.player2.lose;
+                var playerSnapShot = snapshot.val().players.player2;
+                var opponentSnapShot = snapshot.val().players.player1;
             }
+            $("#opponentName").text(opponentSnapShot.name);
+            $("#opponentWin").text(opponentSnapShot.win);
+            $("#opponentLose").text(opponentSnapShot.lose);
+            winScore = playerSnapShot.win;
+            loseScore = playerSnapShot.lose;
             gamesRef.child(gameID).update({
                 status:'game_running'
             });
-            console.log("starting Game")
+            console.log("Game Start")
             startRPS();
         }
         else if (snapshot.val().status == 'game_result'){
@@ -84,10 +83,10 @@ $(function(){
             if(camOn){
                 //Turns off Camera
                 Webcam.reset();
+                camOn = false;
             }
             clearInterval(intervalID); //Stops timer in case it was running
-            //Clear player side of field
-            $("#playerImage").empty();
+            $("#playerImage").empty(); //Clear player side of field
             //Clear opponent side of field
             $("#opponentName").text("Waiting for player 2");
             $("#opponentImage").empty();
@@ -126,30 +125,33 @@ $(function(){
                     playerRef.update({win: winScore++});
                     usersRef.child(userKey).update({totwin: totalWin++})
                     $("#playerImage").html("<p>You Win!</P>");
-                    $("#opponentImage").html("<p>You Lost!</P>")
+                    $("#opponentImage").html("<p>You Lost!</P>");
                     break;
                 case 'lose':
                     playerRef.update({lose: loseScore++});
                     usersRef.child(userKey).update({totlose: totalLose++})
                     $("#playerImage").html("<p>You Lost!</P>");
-                    $("#opponentImage").html("<p>You Win!</P>")
+                    $("#opponentImage").html("<p>You Win!</P>");
+                    break;
+                default:
+                    $("#playerImage").html("<p>Draw!</P>");
+                    $("#opponentImage").html("<p>Draw!</P>");
             }
             usersRef.child(userKey).update({totgames: totalGames++})
             gamesRef.child(gameID).update({status:'game_result'});
-
+            playerRef.update({status: 'pending'});
             //update in history
             var d = new Date();
             var timestamp = d.toUTCString();
             historyRef.push({
-                uID:userKey,
-                name:name,
-                gamephoto:imgData,
-                result:result,
-                choice:choice,
-                timestamp:timestamp
+                uID: userKey,
+                name: name,
+                gamephoto: imgData,
+                result: result,
+                choice: choice,
+                timestamp: timestamp
             });
         }
-        
         //Display player name
         if (userKey == gameID){
             $("#playerName").text(playerSnap.val().player1.name);
@@ -157,7 +159,8 @@ $(function(){
         else{
             $("#playerName").text(playerSnap.val().player2.name);
         }
-        displayPlayerScores();
+        $("#playerWin").text(winScore);
+        $("#playerLose").text(loseScore);
     });
 
     //Listen event for local chat messages
@@ -174,14 +177,8 @@ $(function(){
         messageList.scrollTop(messageList[0].scrollHeight);
     });
 
-    function displayPlayerScores(){
-        //Function to display player score
-        $("#playerWin").text(winScore);
-        $("#playerLose").text(loseScore);
-    }
     //FUNCTIONS
     function startRPS(){
-        //Start game
         $("#playerImage").empty();
         $("#opponentImage").empty();
         timer = 5;
@@ -189,6 +186,7 @@ $(function(){
         intervalID = setInterval(countdown, 1000);
         setTimeout(take_snapshot, 5000);
     }
+
     function countdown(){
         timer--;
         $("#playerImage").text(timer);
@@ -210,7 +208,6 @@ $(function(){
     function detectFace(data_uri){
         /*Function to perform ajax call to Face++ API to detect faces from image
         and returns detected emotions*/
-
         var queryURL = "https://api-us.faceplusplus.com/facepp/v3/detect";
         //Removes 'data:image/jpeg;base64,' from the uri data to match Face++ parameter image_base64
         var data64 = data_uri.replace("data:image/jpeg;base64,","");
@@ -229,18 +226,16 @@ $(function(){
             /*console.log(response.faces);
             var json = JSON.stringify(response, null, ' ');
             console.log(json);*/
-
             if(response.faces[0] == null){
                 //Face++ could not detect a face in the given image, retake picture.
                 $("#playerImage").text("Take Picture Again");
                 setTimeout(startRPS, 2000);
-
                 //DEBUG LOG
                 console.log("Take Picture Again");
             }
             else{
-                imgData = data_uri;
                 //Face++ detected a face, start analying emotions
+                imgData = data_uri;
                 var emotions = response.faces[0].attributes.emotion;
                 var emotionValue = Math.max(emotions.happiness,emotions.surprise,emotions.neutral);
                 var likely = likelyEmotion(emotionValue);
@@ -249,15 +244,12 @@ $(function(){
                 switch (emotionValue){
                     case emotions.happiness:
                         emotion = "Happy";
-                        //console.log("you are happy");
                         break;
                     case emotions.surprise:
                         emotion = "Surprise";
-                        //console.log("you are suprised");
                         break;
                     case emotions.neutral:
                         emotion = "Neutral";
-                        //console.log("you are neutral");
                 }
                 var playerData = {
                     emotion: emotion,
@@ -267,7 +259,6 @@ $(function(){
                 }
                 playerRef.update(playerData);
                 displayPlayerImage(data_uri, emotion, likely);
-
                 //DEBUG LOG
                 /*console.log("face detected");
                 console.log(likely);
