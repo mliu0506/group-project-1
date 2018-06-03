@@ -23,7 +23,7 @@ function renderHistory() {
         var result = childSnapshot.val().result;
         var choice = childSnapshot.val().choice;
         var timestamp = childSnapshot.val().timestamp;
-        $('.slider-panel').append("<div class='slide' ><img src='"+ gamephoto + "' /><p>" + username +" : " + result + " : " + choice + "</p></div>");       
+        $('.slider').append("<div class='slide' ><img src='"+ gamephoto + "' /><p>" + username +" : " + result + " : " + choice + "</p></div>");       
     });
 
 }
