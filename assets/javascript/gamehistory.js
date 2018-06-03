@@ -32,12 +32,15 @@ function renderHistory() {
 function renderProfile() {
     usersRef.child(userKey).once("value",function(childSnapshot) {
         var name = childSnapshot.val().name;
+        $(".userName").text(name);
+        if ( childSnapshot.val().totgames === null) {  // if totgame exist
+            $(".gameResult").html("Number of Game : <br>Win : <br>Lose : </p>" );
+        } else { // if totgame doexn't exist
         var totgames = childSnapshot.val().totgames;
         var totwin = childSnapshot.val().totwin;
         var totlose = childSnapshot.val().totlose;
-        $(".userName").text(name);
         $(".gameResult").html("Number of Game : " + totgames + "<br>Win : " + totwin + "<br>Lose : "+ totlose +"</p>" );
-
+        }
     });
 }
 
