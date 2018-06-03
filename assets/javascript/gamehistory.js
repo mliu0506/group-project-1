@@ -44,8 +44,9 @@ function renderProfile() {
         var totlose = childSnapshot.val().totlose;
         $(".gameResult").html("Number of Game : " + totgames + "<br>Win : " + totwin + "<br>Lose : "+ totlose +"</p>" );
         }
-    }
+    
     });
+    }
 }
 
 
