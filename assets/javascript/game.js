@@ -57,9 +57,8 @@ $(function(){
                 winScore = snapshot.val().players.player2.win;
                 loseScore = snapshot.val().players.player2.lose;
             }
-            gamesRef.child(gameID).update({status:'game_running'});
             console.log("Game Start")
-            startRPS();
+            setTimeout(startRPS,2000);
         }
         else if (snapshot.val().status == 'game_result'){
             //Display opponent scores:
@@ -72,7 +71,6 @@ $(function(){
                 $("#opponentWin").text(snapshot.val().players.player2.win);
                 $("#opponentLose").text(snapshot.val().players.player2.lose);
             }
-            gamesRef.child(gameID).update({status:'game_running'});
             setTimeout(startRPS, 5000);
         }
         else if(!(snapshot.child('players').child('player2').exists())){
@@ -174,6 +172,7 @@ $(function(){
     
     //FUNCTIONS
     function startRPS(){
+        gamesRef.child(gameID).update({status:'game_running'});
         $("#playerImage").empty();
         $("#opponentImage").empty();
         timer = 5;
