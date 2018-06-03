@@ -55,7 +55,7 @@ function signOut() {
   auth2.signOut().then(function () {
     usersRef.child(userKey).update({status:"offline",lastdisconnect:lastdisconnect});
     console.log(userKey + 'User signed out.');
-
+    delCookie("fbuID");
   });
 }
 
