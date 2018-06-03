@@ -33,9 +33,9 @@ function renderProfile() {
     usersRef.child(userKey).once("value",function(childSnapshot) {
         var name = childSnapshot.val().name;
         $(".userName").text(name);
-        if ( childSnapshot.val().totgames === null) {  // if totgame exist
+        if (!childSnapshot.child("totgames").exists()) {  // if totgame not exist
             $(".gameResult").html("Number of Game : <br>Win : <br>Lose : </p>" );
-        } else { // if totgame doexn't exist
+        } else { // if totgame exist
         var totgames = childSnapshot.val().totgames;
         var totwin = childSnapshot.val().totwin;
         var totlose = childSnapshot.val().totlose;
