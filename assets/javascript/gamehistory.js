@@ -30,6 +30,9 @@ function renderHistory() {
 
 
 function renderProfile() {
+    if (userKey == "") { //if user have not login 
+        $(".userName").text("GUESS");
+    } else { // if user login
     usersRef.child(userKey).once("value",function(childSnapshot) {
         var name = childSnapshot.val().name;
         $(".userName").text(name);
@@ -41,6 +44,7 @@ function renderProfile() {
         var totlose = childSnapshot.val().totlose;
         $(".gameResult").html("Number of Game : " + totgames + "<br>Win : " + totwin + "<br>Lose : "+ totlose +"</p>" );
         }
+    }
     });
 }
 
