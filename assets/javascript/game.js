@@ -127,7 +127,7 @@ $(function(){
                 choice: choice,
                 timestamp: timestamp
             });
-            usersRef.child(userKey).update({totgames: totalGames++})
+            //usersRef.child(userKey).update({totgames: totalGames++})
             makeButton();
         }
         //Display player name
