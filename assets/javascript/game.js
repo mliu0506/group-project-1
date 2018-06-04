@@ -137,14 +137,14 @@ $(function(){
         //Display player name
         if (userKey == gameID){
             $("#playerName").text(playerSnap.val().player1.name);
-            winScore = snapshot.val().players.player1.win;
-            loseScore = snapshot.val().players.player1.lose;
+            winScore = playerSnap.val().player1.win;
+            loseScore = playerSnap.val().player1.lose;
             var opponentRef = playerSnap.val().player2;
         }
         else{
             $("#playerName").text(playerSnap.val().player2.name);
-            winScore = snapshot.val().players.player2.win;
-            loseScore = snapshot.val().players.player2.lose;
+            winScore = playerSnap.val().player2.win;
+            loseScore = playerSnap.val().player2.lose;
             var opponentRef = playerSnap.val().player1;
         }
         $("#playerWin").text(winScore);
