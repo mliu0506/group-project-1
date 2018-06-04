@@ -36,9 +36,6 @@ $(function(){
     //Listen event for game status
     gamesRef.child(gameID).on('value', function(snapshot){
         if (snapshot.val().status == "matched"){
-            //Active and attach camera to DOM element
-            Webcam.attach('#my_camera');
-            camOn = true;
             //Check if user is game room creator, assign reference to user path
             if (userKey == gameID){
                 playerRef = gamesRef.child(gameID).child("players").child("player1");
@@ -58,12 +55,7 @@ $(function(){
                 loseScore = snapshot.val().players.player2.lose;
             }
             console.log("Game Start")
-            setTimeout(startRPS,2000);
-        }
-        else if (snapshot.val().status == 'game_result'){
-            //Display opponent scores:
-            console.log("RESULT DISPLAY");
-            setTimeout(startRPS, 5000);
+            setTimeout(makeButton,2000);
         }
         else if(!(snapshot.child('players').child('player2').exists())){
             //No player 2 or player 2 left
@@ -90,8 +82,11 @@ $(function(){
 
     //Listen event for players status
     gamesRef.child(gameID).child('players').on('value', function(playerSnap){
-        if (playerSnap.val().player1.status == 'picture_taken' && playerSnap.val().player2.status == 'picture_taken'){
-            playerRef.update({status: 'pending'});
+        if (playerSnap.val().player1.status == 'stand_by' && playerSnap.val().player2.status == 'stand_by'){
+            startRPS();
+        }
+        else if (playerSnap.val().player1.status == 'picture_taken' && playerSnap.val().player2.status == 'picture_taken'){
+            playerRef.update({status: 'pending_results'});
             if (isPlayer2){
                 var choice = playerSnap.val().player2.emotion;
                 var name = playerSnap.val().player2.name;
@@ -134,7 +129,7 @@ $(function(){
                 timestamp: timestamp
             });
             usersRef.child(userKey).update({totgames: totalGames++})
-            gamesRef.child(gameID).update({status:'game_result'});
+            makeButton();
         }
         //Display player name
         if (userKey == gameID){
@@ -168,9 +163,19 @@ $(function(){
     });
     
     //FUNCTIONS
-    function startRPS(){
+    function makeButton(){
         gamesRef.child(gameID).update({status:'game_running'});
-        $("#playerImage").empty();
+        //$("#playerImage").empty();
+        var newButton = $("<button>");
+        newButton.attr({
+            class: "btn btn-success",
+            id: "gameReady"
+        });
+        newButton.text("Take Picture");
+        $("#playerImage").append(newButton);
+    }
+
+    function startRPS(){
         $("#opponentImage").empty();
         timer = 5;
         clearInterval(intervalID);
@@ -343,6 +348,19 @@ $(function(){
             message: message
         });
     }
+
+    //Click event for gameReady button
+    $("#gameReady").on("click", function(){
+        //Active and attach camera to DOM element
+        $("#playerImage").empty();
+        $("#my_camera").css({display: 'block'});
+        if (!camOn){
+            Webcam.attach('#my_camera');
+            camOn = true;
+        }
+        playerRef.update({status: 'stand_by'});
+        //startRPS();
+    });
 
     //Click event for local message field submit
     $("#submitMessage").on("click", function(event){
