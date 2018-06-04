@@ -168,7 +168,7 @@ $(function(){
         //$("#playerImage").empty();
         var newButton = $("<button>");
         newButton.attr({
-            class: "btn btn-success",
+            class: "btn btn-success m-2",
             id: "gameReady"
         });
         newButton.text("Take Picture");
@@ -352,6 +352,7 @@ $(function(){
     //Click event for gameReady button
     $("#gameReady").on("click", function(){
         //Active and attach camera to DOM element
+        console.log("button clicked");
         $("#playerImage").empty();
         $("#my_camera").css({display: 'block'});
         if (!camOn){
