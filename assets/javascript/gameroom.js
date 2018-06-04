@@ -24,7 +24,7 @@
 
 function joinGame() {
   $(".gameroom").on("click",".join-game",function(){
-    gameID = $(".join-game").attr("data-value");
+    var gameID = $(".join-game").attr("data-value");
     //tempRef.update({gameID:gameID});
     setCookie("gameID", gameID, 30); //save the uID into the cookie
     var d = new Date();
