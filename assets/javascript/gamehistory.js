@@ -35,7 +35,7 @@ function renderHistory() {
         var result = childSnapshot.val().result;
         var choice = childSnapshot.val().choice;
         var timestamp = childSnapshot.val().timestamp;
-        $('.photo-history').prepend("<div class='slide'><img class='img-fluid img-thumbnail' src='"+ gamephoto + "' /><p>" + username +" : " + result + " : " + choice + "</p></div><BR>");       
+        $('.photo-history').prepend("<div class='slide'><img class='img-fluid img-thumbnail' src='"+ gamephoto + "' /><p>" + username +" : " + result + " : " + choice + "</p></div>");       
        
     });
 
