@@ -317,6 +317,8 @@ $(function(){
                         return 'win';
                     case 'Suprise':
                         return 'lose';
+                    default:
+                        return 'draw';
                 }
                 break;
             case 'Neutral':
@@ -325,6 +327,8 @@ $(function(){
                         return 'win';
                     case 'Happy':
                         return 'lose';
+                    default:
+                        return 'draw';
                 }
                 break;
             case 'Suprise':
@@ -333,6 +337,8 @@ $(function(){
                         return 'win';
                     case 'Neutral':
                         return 'lose';
+                    default:
+                        return 'draw';
                 }
                 break;
             default:
