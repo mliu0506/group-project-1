@@ -48,8 +48,6 @@ $(function(){
                     $("#opponentName").text(snapshot.val().players.player2.name);
                     $("#opponentWin").text(snapshot.val().players.player2.win);
                     $("#opponentLose").text(snapshot.val().players.player2.lose);
-                    winScore = snapshot.val().players.player1.win;
-                    loseScore = snapshot.val().players.player1.lose;
                 }
                 else{
                     isPlayer2 = true;
@@ -57,8 +55,6 @@ $(function(){
                     $("#opponentName").text(snapshot.val().players.player1.name);
                     $("#opponentWin").text(snapshot.val().players.player1.win);
                     $("#opponentLose").text(snapshot.val().players.player1.lose);
-                    winScore = snapshot.val().players.player2.win;
-                    loseScore = snapshot.val().players.player2.lose;
                 }
                 console.log("Game Start")
                 makeButton();
@@ -141,10 +137,14 @@ $(function(){
         //Display player name
         if (userKey == gameID){
             $("#playerName").text(playerSnap.val().player1.name);
+            winScore = snapshot.val().players.player1.win;
+            loseScore = snapshot.val().players.player1.lose;
             var opponentRef = playerSnap.val().player2;
         }
         else{
             $("#playerName").text(playerSnap.val().player2.name);
+            winScore = snapshot.val().players.player2.win;
+            loseScore = snapshot.val().players.player2.lose;
             var opponentRef = playerSnap.val().player1;
         }
         $("#playerWin").text(winScore);
