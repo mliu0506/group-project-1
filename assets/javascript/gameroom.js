@@ -23,7 +23,7 @@
 
 
 function joinGame() {
-  $(".gameroom").on("click",".join-game",function(event){
+  $(".chat").on("click",".join-game",function(event){
     event.preventDefault();
     var gameID = $(".join-game").attr("data-value");
     alert($(".join-game").attr("data-value"));
