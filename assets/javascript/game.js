@@ -37,27 +37,7 @@ $(function(){
     //Listen event for game status
     gamesRef.child(gameID).on('value', function(snapshot){
         if (snapshot.val().status == "matched"){
-            //Check if user is game room creator, assign reference to user path
-            if (userKey == gameID){
-                playerRef = gamesRef.child(gameID).child("players").child("player1");
-                $("#opponentName").text(snapshot.val().players.player2.name);
-                $("#opponentWin").text(snapshot.val().players.player2.win);
-                $("#opponentLose").text(snapshot.val().players.player2.lose);
-                winScore = snapshot.val().players.player1.win;
-                loseScore = snapshot.val().players.player1.lose;
-            }
-            else{
-                isPlayer2 = true;
-                playerRef = gamesRef.child(gameID).child("players").child("player2");
-                $("#opponentName").text(snapshot.val().players.player1.name);
-                $("#opponentWin").text(snapshot.val().players.player1.win);
-                $("#opponentLose").text(snapshot.val().players.player1.lose);
-                winScore = snapshot.val().players.player2.win;
-                loseScore = snapshot.val().players.player2.lose;
-            }
-            console.log("Game Start")
-            makeButton();
-            gamesRef.child(gameID).update({status:'game_running'});
+            console.log("Can you see this message player 2?");
         }
         if(!(snapshot.child('players').child('player2').exists())){
             //No player 2 or player 2 left
@@ -84,6 +64,29 @@ $(function(){
 
     //Listen event for players status
     gamesRef.child(gameID).child('players').on('value', function(playerSnap){
+        if(playerSnap.val().player1.status == 'matched_players2' && playerSnap.val().player2.status == 'matched_player2'){
+            //Check if user is game room creator, assign reference to user path
+            if (userKey == gameID){
+                playerRef = gamesRef.child(gameID).child("players").child("player1");
+                $("#opponentName").text(snapshot.val().players.player2.name);
+                $("#opponentWin").text(snapshot.val().players.player2.win);
+                $("#opponentLose").text(snapshot.val().players.player2.lose);
+                winScore = snapshot.val().players.player1.win;
+                loseScore = snapshot.val().players.player1.lose;
+            }
+            else{
+                isPlayer2 = true;
+                playerRef = gamesRef.child(gameID).child("players").child("player2");
+                $("#opponentName").text(snapshot.val().players.player1.name);
+                $("#opponentWin").text(snapshot.val().players.player1.win);
+                $("#opponentLose").text(snapshot.val().players.player1.lose);
+                winScore = snapshot.val().players.player2.win;
+                loseScore = snapshot.val().players.player2.lose;
+            }
+            console.log("Game Start")
+            makeButton();
+            gamesRef.child(gameID).update({status:'game_running'});
+        }
         if (playerSnap.val().player1.status == 'stand_by' && playerSnap.val().player2.status == 'stand_by'){
             startRPS();
         }
