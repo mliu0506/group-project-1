@@ -12,10 +12,6 @@ var imgData;
 //Variables for local game score
 var winScore;
 var loseScore;
-/*Variables for total scores
-var totalWin;
-var totalLose;
-var totalGames;*/
 //Variables for countdown timer
 var intervalID;
 var timer;
@@ -27,19 +23,16 @@ $(function(){
     console.log("gameJS Cookie: " + gameID);
 
     //Firebase Listeners
-    //Listen value to grab overall score
-    /*usersRef.child(userKey).on('value', function(snapScore){
-        totalWin = snapScore.val().totwin;
-        totalLose = snapScore.val().totlose;
-        totalGames = snapScore.val().totgames;
-    });*/
-
-    //Listen event for game status
-    gamesRef.child(gameID).on('value', function(snapshot){
-        if(snapshot == null){
-            //Game got removed
+    gamesRef.on('value',function(snapshot){
+        if(!(snapshot.child(gameID).exists())){
+            //Game got removed or doesn't exist
+            console.log("Game does not exist");
             document.location.href = "index.html";
         }
+    });
+
+    //Listen event for game session
+    gamesRef.child(gameID).on('value', function(snapshot){
         if (snapshot.child('players').child('player2').exists()){
             if(snapshot.val().players.player1.status == 'matched_players2' && snapshot.val().players.player2.status == 'matched_player2'){
                 //Check if user is game room creator, assign reference to user path
@@ -85,7 +78,6 @@ $(function(){
             startRPS();
         }
         else if (playerSnap.val().player1.status == 'picture_taken' && playerSnap.val().player2.status == 'picture_taken'){
-            playerRef.update({status: 'pending_results'});
             if (isPlayer2){
                 var choice = playerSnap.val().player2.emotion;
                 var name = playerSnap.val().player2.name;
@@ -101,20 +93,25 @@ $(function(){
             //update scores
             switch (result){
                 case 'win':
-                    playerRef.update({win: winScore++});
-                    //usersRef.child(userKey).update({totwin: totalWin++})
-                    $("#playerImage").html("<p>You Win!</P>");
-                    $("#opponentImage").html("<p>You Lost!</P>");
+                    playerRef.update({
+                        win: winScore++,
+                        status: 'pending_results'
+                    });
+                    $("#playerImage").append("<p>You Win!</P>");
+                    $("#opponentImage").append("<p>You Lost!</P>");
                     break;
                 case 'lose':
-                    playerRef.update({lose: loseScore++});
-                    //usersRef.child(userKey).update({totlose: totalLose++})
-                    $("#playerImage").html("<p>You Lost!</P>");
-                    $("#opponentImage").html("<p>You Win!</P>");
+                    playerRef.update({
+                        lose: loseScore++,
+                        status: 'pending_results'
+                    });
+                    $("#playerImage").append("<p>You Lost!</P>");
+                    $("#opponentImage").append("<p>You Win!</P>");
                     break;
                 default:
-                    $("#playerImage").html("<p>Draw!</P>");
-                    $("#opponentImage").html("<p>Draw!</P>");
+                    playerRef.update({status: 'pending_results'});
+                    $("#playerImage").append("<p>Draw!</P>");
+                    $("#opponentImage").append("<p>Draw!</P>");
             }
             //update in history
             var d = new Date();
@@ -127,7 +124,6 @@ $(function(){
                 choice: choice,
                 timestamp: timestamp
             });
-            //usersRef.child(userKey).update({totgames: totalGames++})
             makeButton();
         }
         //Display player name
@@ -374,7 +370,6 @@ $(function(){
         $("#message").val("");
     });
 
-    //TODO//
     //Click event for leaving game
     $("#leaveGame").on("click", function(){
         clearInterval(intervalID); //Stops Timer if it was running
