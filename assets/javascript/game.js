@@ -114,9 +114,11 @@ $(function(){
                     playerRef.update({status: 'pending_results'});
             }
             //update in history
-            var d = new Date();
-            var timestamp = d.toUTCString();
-            historyRef.push({
+            if (result != undefined || result != null){
+                console.log("HISTORY");
+                var d = new Date();
+                var timestamp = d.toUTCString();
+                historyRef.push({
                 uID: userKey,
                 name: name,
                 gamephoto: imgData,
@@ -124,6 +126,7 @@ $(function(){
                 choice: choice,
                 timestamp: timestamp
             });
+            }
             makeButton();
         }
         //Display player name
