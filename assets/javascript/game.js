@@ -63,14 +63,6 @@ $(function(){
         else if (snapshot.val().status == 'game_result'){
             //Display opponent scores:
             console.log("RESULT DISPLAY");
-            if (isPlayer2){
-                $("#opponentWin").text(snapshot.val().players.player1.win);
-                $("#opponentLose").text(snapshot.val().players.player1.lose);
-            }
-            else{
-                $("#opponentWin").text(snapshot.val().players.player2.win);
-                $("#opponentLose").text(snapshot.val().players.player2.lose);
-            }
             setTimeout(startRPS, 5000);
         }
         else if(!(snapshot.child('players').child('player2').exists())){
@@ -99,7 +91,7 @@ $(function(){
     //Listen event for players status
     gamesRef.child(gameID).child('players').on('value', function(playerSnap){
         if (playerSnap.val().player1.status == 'picture_taken' && playerSnap.val().player2.status == 'picture_taken'){
-            playerRef.update({status: 'game_complete'});
+            playerRef.update({status: 'pending'});
             if (isPlayer2){
                 var choice = playerSnap.val().player2.emotion;
                 var name = playerSnap.val().player2.name;
@@ -130,9 +122,6 @@ $(function(){
                     $("#playerImage").html("<p>Draw!</P>");
                     $("#opponentImage").html("<p>Draw!</P>");
             }
-            usersRef.child(userKey).update({totgames: totalGames++})
-            gamesRef.child(gameID).update({status:'game_result'});
-            playerRef.update({status: 'pending'});
             //update in history
             var d = new Date();
             var timestamp = d.toUTCString();
@@ -144,16 +133,24 @@ $(function(){
                 choice: choice,
                 timestamp: timestamp
             });
+            usersRef.child(userKey).update({totgames: totalGames++})
+            gamesRef.child(gameID).update({status:'game_result'});
         }
         //Display player name
         if (userKey == gameID){
             $("#playerName").text(playerSnap.val().player1.name);
+            var opponentRef = playerSnap.val().player2;
         }
         else{
             $("#playerName").text(playerSnap.val().player2.name);
+            var opponentRef = playerSnap.val().player1;
         }
         $("#playerWin").text(winScore);
         $("#playerLose").text(loseScore);
+        if(opponentRef != null){
+            $("#opponentWin").text(opponentRef.win);
+            $("#opponentLose").text(opponentRef.lose);
+        }
     });
 
     //Listen event for local chat messages
