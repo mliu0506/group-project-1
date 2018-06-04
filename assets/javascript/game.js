@@ -55,7 +55,8 @@ $(function(){
                 loseScore = snapshot.val().players.player2.lose;
             }
             console.log("Game Start")
-            setTimeout(makeButton,2000);
+            makeButton();
+            gamesRef.child(gameID).update({status:'game_running'});
         }
         else if(!(snapshot.child('players').child('player2').exists())){
             //No player 2 or player 2 left
@@ -164,7 +165,6 @@ $(function(){
     
     //FUNCTIONS
     function makeButton(){
-        gamesRef.child(gameID).update({status:'game_running'});
         //$("#playerImage").empty();
         var newButton = $("<button>");
         newButton.attr({
