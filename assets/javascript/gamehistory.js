@@ -16,7 +16,8 @@ function renderHistory() {
 //});
     
     // when ever the user DB value is being update, the following function will be trigger
-    historyRef.once("child_added",function(childSnapshot){
+    //historyRef.on("child_added",function(childSnapshot){
+    historyRef.on("value",function(childSnapshot){
         var gamephoto = childSnapshot.val().gamephoto;
         var username = childSnapshot.val().name;
         var userID = childSnapshot.val().uID;
