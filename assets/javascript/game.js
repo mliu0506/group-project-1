@@ -58,7 +58,7 @@ $(function(){
             makeButton();
             gamesRef.child(gameID).update({status:'game_running'});
         }
-        else if(!(snapshot.child('players').child('player2').exists())){
+        if(!(snapshot.child('players').child('player2').exists())){
             //No player 2 or player 2 left
             console.log("NO PLAYER 2");
             if(camOn){
@@ -75,7 +75,7 @@ $(function(){
             $("#opponentLose").empty();
             gamesRef.child(gameID).update({status:'pending'});
         }
-        else if(snapshot == null){
+        if(snapshot == null){
             //Game got removed
             document.location.href = "index.html";
         }
@@ -383,5 +383,6 @@ $(function(){
             //Remove entire game from play
             gamesRef.child(gameID).remove();
         }
+        document.location.href = "index.html";
     });
 });
