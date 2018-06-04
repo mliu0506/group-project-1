@@ -33,7 +33,7 @@ function renderHistory() {
 
 function renderProfile() {
     if (userKey == "") { //if user have not login 
-        $(".userName").text("GUESS");
+        $(".userName").text("GUEST BOOK");
     } else { // if user login
     usersRef.child(userKey).once("value",function(childSnapshot) {
         var name = childSnapshot.val().name;
