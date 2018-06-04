@@ -309,13 +309,13 @@ $(function(){
 
     function compareFace(playerChoice, opponentChoice){
         //Function to compare player's choice with opponent's choice, return string: win, lose or draw
-        //RPS logic: Happy > Neutral, Neutral > Suprise, Suprise > Happy
+        //RPS logic: Happy > Neutral, Neutral > Surprise,Surprise > Happy
         switch(playerChoice){
             case 'Happy':
                 switch(opponentChoice){
                     case 'Neutral':
                         return 'win';
-                    case 'Suprise':
+                    case 'Surprise':
                         return 'lose';
                     default:
                         return 'draw';
@@ -323,7 +323,7 @@ $(function(){
                 break;
             case 'Neutral':
                 switch(opponentChoice){
-                    case 'Suprise':
+                    case 'Surprise':
                         return 'win';
                     case 'Happy':
                         return 'lose';
@@ -331,7 +331,7 @@ $(function(){
                         return 'draw';
                 }
                 break;
-            case 'Suprise':
+            case 'Surprise':
                 switch(opponentChoice){
                     case 'Happy':
                         return 'win';
