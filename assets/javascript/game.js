@@ -36,6 +36,10 @@ $(function(){
 
     //Listen event for game status
     gamesRef.child(gameID).on('value', function(snapshot){
+        if(snapshot == null){
+            //Game got removed
+            document.location.href = "index.html";
+        }
         if (snapshot.val().status == "matched"){
             gamesRef.child(gameID).update({status:'game_running'});
             console.log("Can you see this message player 2?");
@@ -76,10 +80,6 @@ $(function(){
             $("#opponentWin").empty();
             $("#opponentLose").empty();
             gamesRef.child(gameID).update({status:'pending'});
-        }
-        if(snapshot == null){
-            //Game got removed
-            document.location.href = "index.html";
         }
     });
 
@@ -357,11 +357,11 @@ $(function(){
 
     //Click event for gameReady button
     $("#gameReady").on("click", function(){
-        //Active and attach camera to DOM element
         console.log("button clicked");
         $("#playerImage").empty();
         $("#my_camera").css({display: 'block'});
         if (!camOn){
+            //Active and attach camera to DOM element
             Webcam.attach('#my_camera');
             camOn = true;
         }
