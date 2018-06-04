@@ -248,13 +248,12 @@ $(function(){
                     case emotions.neutral:
                         emotion = "Neutral";
                 }
-                var playerData = {
+                playerRef.update({
                     emotion: emotion,
                     likely: likely,
                     img: data_uri,
                     status: 'picture_taken'
-                }
-                playerRef.update(playerData);
+                });
                 displayPlayerImage(data_uri, emotion, likely);
                 //DEBUG LOG
                 /*console.log("face detected");
