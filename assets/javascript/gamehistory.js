@@ -23,7 +23,7 @@ function renderHistory() {
         var result = childSnapshot.val().result;
         var choice = childSnapshot.val().choice;
         var timestamp = childSnapshot.val().timestamp;
-        $('.slider').append("<div class='slide'><img src='"+ gamephoto + "' /><p>" + username +" : " + result + " : " + choice + "</p></div>");       
+        $('.slider').prepend("<div class='slide'><img src='"+ gamephoto + "' /><p>" + username +" : " + result + " : " + choice + "</p></div>");       
        
     });
 
