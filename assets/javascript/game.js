@@ -40,10 +40,6 @@ $(function(){
             //Game got removed
             document.location.href = "index.html";
         }
-        if (snapshot.val().status == "matched"){
-            gamesRef.child(gameID).update({status:'game_running'});
-            console.log("Can you see this message player 2?");
-        }
         if (snapshot.child('players').child('player2').exists()){
             if(snapshot.val().players.player1.status == 'matched_players2' && snapshot.val().players.player2.status == 'matched_player2'){
                 //Check if user is game room creator, assign reference to user path
@@ -79,7 +75,7 @@ $(function(){
             $("#opponentImage").empty();
             $("#opponentWin").empty();
             $("#opponentLose").empty();
-            gamesRef.child(gameID).update({status:'pending'});
+            //gamesRef.child(gameID).update({status:'pending'});
         }
     });
 
@@ -356,7 +352,7 @@ $(function(){
     }
 
     //Click event for gameReady button
-    $("#gameReady").on("click", function(){
+    $("#playerZone").on("click", $("gameReady"), function(){
         console.log("button clicked");
         $("#playerImage").empty();
         $("#my_camera").css({display: 'block'});
