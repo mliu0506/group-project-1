@@ -15,7 +15,18 @@ function renderHistory() {
 //    }    
 //});
     
-    // when ever the user DB value is being update, the following function will be trigger
+   // when ever the user DB value is being update, the following function will be trigger
+   // historyRef.on("child_added",function(childSnapshot){
+   // 
+   //     var gamephoto = childSnapshot.val().gamephoto;
+   //     var username = childSnapshot.val().name;
+   //     var userID = childSnapshot.val().uID;
+   //     var result = childSnapshot.val().result;
+   //     var choice = childSnapshot.val().choice;
+   //     var timestamp = childSnapshot.val().timestamp;
+   //     $('.slider').prepend("<div class='slide'><img src='"+ gamephoto + "' /><p>" + username +" : " + result + " : " + choice + "</p></div>");       
+       
+   // });
     historyRef.on("child_added",function(childSnapshot){
 
         var gamephoto = childSnapshot.val().gamephoto;
@@ -24,7 +35,7 @@ function renderHistory() {
         var result = childSnapshot.val().result;
         var choice = childSnapshot.val().choice;
         var timestamp = childSnapshot.val().timestamp;
-        $('.slider').prepend("<div class='slide'><img src='"+ gamephoto + "' /><p>" + username +" : " + result + " : " + choice + "</p></div>");       
+        $('.photo-history').prepend("<div class='slide'><img class='img-fluid img-thumbnail' src='"+ gamephoto + "' /><p>" + username +" : " + result + " : " + choice + "</p></div><BR>");       
        
     });
 
