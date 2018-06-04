@@ -5,6 +5,7 @@
       $(".gameroom").empty();
       childsnapshot.forEach(function(child) {
        // if (child.key !== userKey){
+        if (status ==="pending") {
           var gameID = child.key
           var photo = child.val().photo;
           var name = child.val().name;
@@ -12,7 +13,6 @@
           var timestamp = child.val().timestamp;
           console.log("Game Name:" + child.val().name);
           console.log("Game Status:" + child.val().status);
-          if (status ==="pending") {
             $(".gameroom").append("<div class='chat'><div class='chat-header clearfix'><img class='rounded-circle' src="+ photo +" alt='avatar' /><div class='chat-about'><div class='chat-with'> Game created by " + name + "</div><span class='message-data-time'>" + timestamp + "</span></div><button class='join-game' data-value='"+ gameID + "'>Join Game</button><i class='fa fa-star'></i></div></div>");
           //  $(".gameroom").append("<BR>");
           }
