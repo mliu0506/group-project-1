@@ -12,10 +12,10 @@ var imgData;
 //Variables for local game score
 var winScore;
 var loseScore;
-//Variables for total scores
+/*Variables for total scores
 var totalWin;
 var totalLose;
-var totalGames;
+var totalGames;*/
 //Variables for countdown timer
 var intervalID;
 var timer;
@@ -28,11 +28,11 @@ $(function(){
 
     //Firebase Listeners
     //Listen value to grab overall score
-    usersRef.child(userKey).on('value', function(snapScore){
+    /*usersRef.child(userKey).on('value', function(snapScore){
         totalWin = snapScore.val().totwin;
         totalLose = snapScore.val().totlose;
         totalGames = snapScore.val().totgames;
-    });
+    });*/
 
     //Listen event for game status
     gamesRef.child(gameID).on('value', function(snapshot){
@@ -102,13 +102,13 @@ $(function(){
             switch (result){
                 case 'win':
                     playerRef.update({win: winScore++});
-                    usersRef.child(userKey).update({totwin: totalWin++})
+                    //usersRef.child(userKey).update({totwin: totalWin++})
                     $("#playerImage").html("<p>You Win!</P>");
                     $("#opponentImage").html("<p>You Lost!</P>");
                     break;
                 case 'lose':
                     playerRef.update({lose: loseScore++});
-                    usersRef.child(userKey).update({totlose: totalLose++})
+                    //usersRef.child(userKey).update({totlose: totalLose++})
                     $("#playerImage").html("<p>You Lost!</P>");
                     $("#opponentImage").html("<p>You Win!</P>");
                     break;
