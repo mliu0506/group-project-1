@@ -2,29 +2,29 @@
     game.js contains the JavaScript to run the main game of Rock Paper Scissor (Happy, Suprise, Neutral)
     Webcam library and Face++ API are called here
 */
+//GamePage Global Variables
+var messageList = $("#messageList"); //Variable for local chat messages
+var isPlayer2 = false;
+var camOn = false;
+var playerRef;
+var imgData;
+//Variables for local game score
+var winScore;
+var loseScore;
+//Variables for total scores
+var totalWin;
+var totalLose;
+var totalGames;
+//Variables for countdown timer
+var intervalID;
+var timer;
+
+//Gets the GameID from cookie, workaround page refreshs
+var gameID = getCookie("gameID");
+console.log("gameJS Cookie: " + gameID);
+
 //Shorthand for $(document).ready(function(){...});
 $(function(){
-    //GamePage Global Variables
-    var messageList = $("#messageList"); //Variable for local chat messages
-    var isPlayer2 = false;
-    var camOn = false;
-    var playerRef;
-    var imgData;
-    //Variables for local game score
-    var winScore;
-    var loseScore;
-    //Variables for total scores
-    var totalWin;
-    var totalLose;
-    var totalGames;
-    //Variables for countdown timer
-    var intervalID;
-    var timer;
-    
-    //Gets the GameID from cookie, workaround page refreshs
-    var gameID = getCookie("gameID");
-    console.log("gameJS Cookie: " + gameID);
-
     //Firebase Listeners
     //Listen value to grab overall score
     usersRef.child(userKey).on('value', function(snapScore){
