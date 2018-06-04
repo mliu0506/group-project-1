@@ -4,12 +4,12 @@
       console.log("Game List :" + userKey);
       $(".gameroom").empty();
       childsnapshot.forEach(function(child) {
+        var status = child.val().status; 
        // if (child.key !== userKey){
         if (status ==="pending") {
           var gameID = child.key
           var photo = child.val().photo;
           var name = child.val().name;
-          var status = child.val().status; 
           var timestamp = child.val().timestamp;
           console.log("Game Name:" + child.val().name);
           console.log("Game Status:" + child.val().status);
